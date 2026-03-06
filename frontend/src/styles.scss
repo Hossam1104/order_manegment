@@ -71,6 +71,13 @@ $dark-theme: mat.define-theme((
 }
 
 // ==========================================
+// MATERIAL ICONS COMPAT FIX
+// ==========================================
+.material-icons {
+  font-feature-settings: 'liga';
+}
+
+// ==========================================
 // GLOBAL RESETS & BASE
 // ==========================================
 *, *::before, *::after {
