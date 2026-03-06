@@ -18,6 +18,7 @@
 // ==========================================
 .main-nav-sidebar {
   width: v.$sidebar-expanded;
+  max-width: 85vw;
   background: var(--color-surface);
   border-right: 1px solid var(--color-border);
   transition: width v.$transition-smooth;
@@ -25,8 +26,14 @@
   flex-direction: column;
   overflow: hidden;
 
+  // On Desktop, handle collapsed mode
   &.collapsed {
     width: v.$sidebar-collapsed;
+  }
+
+  // On Mobile, override the width entirely when opened
+  &.mobile-open {
+    width: v.$sidebar-expanded;
   }
 
   .sidebar-content {

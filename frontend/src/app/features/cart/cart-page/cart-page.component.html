@@ -90,13 +90,13 @@
                     </div>
 
                     <!-- Column 2: Price -->
-                    <div class="col-price">
+                    <div class="col-price" data-label="Unit Price">
                         <span class="price-value">{{ cartItem.item.price | number:'1.0-0' }} <span
                                 class="sar-icon"></span></span>
                     </div>
 
                     <!-- Column 3: Quantity -->
-                    <div class="col-qty">
+                    <div class="col-qty" data-label="Quantity">
                         <div class="qty-stepper hidden-print">
                             <button type="button" class="qty-btn" (click)="decrementQty(cartItem)"
                                 [disabled]="cartItem.quantity <= 1">
@@ -113,7 +113,7 @@
                     </div>
 
                     <!-- Column 4: Total -->
-                    <div class="col-total">
+                    <div class="col-total" data-label="Total">
                         <span class="total-value">
                             {{ ((cartItem.item.price + cartItem.item.price * cartItem.item.vatPercentage / 100) *
                             cartItem.quantity) | number:'1.0-0' }} <span class="sar-icon"></span>

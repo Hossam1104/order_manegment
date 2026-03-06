@@ -42,7 +42,7 @@ export class BulkUploadComponent {
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'items_bulk_upload_template.xlsx';
+                a.download = 'items_bulk_upload_template.csv';
                 a.click();
                 window.URL.revokeObjectURL(url);
             },
@@ -60,7 +60,7 @@ export class BulkUploadComponent {
         const input = event.target as HTMLInputElement;
         if (input.files && input.files.length > 0) {
             const file = input.files[0];
-            if (!file.name.endsWith('.xlsx')) {
+            if (!file.name.endsWith('.csv')) {
                 this.snackBar.open(
                     this.translate.instant('BULK_UPLOAD.INVALID_FORMAT'),
                     'OK',

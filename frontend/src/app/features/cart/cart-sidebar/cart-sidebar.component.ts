@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { CartService, CartItem } from '../../../core/services/cart.service';
+import { ItemService } from '../../../core/services/item.service';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { UIAnimations } from '../../../shared/animations/ui.animations';
 
@@ -35,6 +36,7 @@ import { UIAnimations } from '../../../shared/animations/ui.animations';
 })
 export class CartSidebarComponent {
     cartService = inject(CartService);
+    private itemService = inject(ItemService);
     private dialog = inject(MatDialog);
     private snackBar = inject(MatSnackBar);
     private translate = inject(TranslateService);
@@ -82,9 +84,6 @@ export class CartSidebarComponent {
     }
 
     getImageUrl(cartItem: CartItem): string | null {
-        if (!cartItem.item.imagePath) return null;
-        if (cartItem.item.imagePath.startsWith('http')) return cartItem.item.imagePath;
-        const filename = cartItem.item.imagePath.split('/').pop();
-        return `http://localhost:5050/api/items/image/${filename}`;
+        return this.itemService.getImageUrl(cartItem.item.imagePath);
     }
 }

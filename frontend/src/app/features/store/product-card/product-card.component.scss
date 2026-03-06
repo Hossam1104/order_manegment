@@ -115,6 +115,10 @@
       gap: v.$spacing-1;
       margin-bottom: v.$spacing-1;
       
+      @media (max-width: 360px) {
+        flex-direction: column;
+      }
+      
       .product-name {
         margin: 0;
         font-size: 15px;
@@ -134,6 +138,7 @@
         padding: 3px 8px;
         border-radius: v.$radius-pill;
         white-space: nowrap;
+        flex-shrink: 0; // prevent from squishing
       }
     }
     

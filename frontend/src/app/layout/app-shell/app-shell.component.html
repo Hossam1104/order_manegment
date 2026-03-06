@@ -1,8 +1,10 @@
-<mat-sidenav-container class="app-sidenav-container" [hasBackdrop]="false" [dir]="currentDir()">
+<mat-sidenav-container class="app-sidenav-container" [hasBackdrop]="isMobile()"
+    (backdropClick)="sidebarCollapsed.set(true)" [dir]="currentDir()">
 
-    <!-- Left Navigation Sidebar (Collapsible) -->
-    <mat-sidenav #navDrawer mode="side" position="start" [opened]="true" class="main-nav-sidebar"
-        [class.collapsed]="sidebarCollapsed()">
+    <!-- Left Navigation Sidebar (Collapsible & Mobile Responsive) -->
+    <mat-sidenav #navDrawer [mode]="isMobile() ? 'over' : 'side'" position="start"
+        [opened]="isMobile() ? !sidebarCollapsed() : true" class="main-nav-sidebar"
+        [class.collapsed]="!isMobile() && sidebarCollapsed()" [class.mobile-open]="isMobile() && !sidebarCollapsed()">
 
         <div class="sidebar-content">
             <!-- Logo area -->

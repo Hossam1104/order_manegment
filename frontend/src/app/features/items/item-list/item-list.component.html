@@ -9,14 +9,16 @@
             <p class="text-muted header-subtitle">{{ 'ITEMS.SUBTITLE' | translate }}</p>
         </div>
         <span class="spacer"></span>
-        <button mat-stroked-button color="primary" class="bulk-btn" (click)="openBulkUploadDialog()">
-            <mat-icon>upload_file</mat-icon>
-            {{ 'BULK_UPLOAD.TITLE' | translate }}
-        </button>
-        <button mat-flat-button color="primary" class="add-btn" (click)="openAddDialog()">
-            <mat-icon>add</mat-icon>
-            {{ 'ITEMS.ADD' | translate }}
-        </button>
+        <div class="header-actions">
+            <button mat-stroked-button color="primary" class="bulk-btn" (click)="openBulkUploadDialog()">
+                <mat-icon>upload_file</mat-icon>
+                {{ 'BULK_UPLOAD.TITLE' | translate }}
+            </button>
+            <button mat-flat-button color="primary" class="add-btn" (click)="openAddDialog()">
+                <mat-icon>add</mat-icon>
+                {{ 'ITEMS.ADD' | translate }}
+            </button>
+        </div>
     </div>
 
     <!-- Admin Data Card -->
