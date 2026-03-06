@@ -181,8 +181,8 @@ body {
   vertical-align: -0.05em;
   margin-inline-start: 4px;
   background: currentColor;
-  -webkit-mask: url('/assets/icons/sar-symbol.svg') no-repeat center / contain;
-  mask: url('/assets/icons/sar-symbol.svg') no-repeat center / contain;
+  -webkit-mask: url('assets/icons/sar-symbol.svg') no-repeat center / contain;
+  mask: url('assets/icons/sar-symbol.svg') no-repeat center / contain;
 
   &.sar-sm { width: 14px; height: 14px; }
   &.sar-md { width: 18px; height: 18px; }
