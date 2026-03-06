@@ -175,3 +175,4 @@ D:\AI Tools\order_manegment\backend\bin\Debug\net9.0\ExcelNumberFormat.dll
 D:\AI Tools\order_manegment\backend\bin\Debug\net9.0\RBush.dll
 D:\AI Tools\order_manegment\backend\bin\Debug\net9.0\SixLabors.Fonts.dll
 D:\AI Tools\order_manegment\backend\bin\Debug\net9.0\System.IO.Packaging.dll
+D:\AI Tools\order_manegment\backend\obj\Debug\net9.0\OrderManagement.API.sourcelink.json

@@ -78,7 +78,7 @@
     "VAT_AMOUNT": "إجمالي ضريبة القيمة المضافة",
     "GRAND_TOTAL": "الإجمالي المقدّر",
     "CLEAR": "تفريغ السلة",
-    "PRINT_INVOICE": "طباعة الفاتورة (A4)",
+    "PRINT_INVOICE": "طباعة الفاتورة",
     "CHECKOUT": "تأكيد طلب الشراء",
     "ORDER_SUMMARY": "ملخص الطلب",
     "ITEMS_COUNT": "أصناف",
