@@ -132,6 +132,11 @@ body {
   max-width: v.$max-w-container;
   margin: 0 auto;
   padding: v.$spacing-4;
+  
+  @media (max-width: 768px) {
+    padding: v.$spacing-2;
+    overflow-x: hidden;
+  }
 }
 
 .text-muted {

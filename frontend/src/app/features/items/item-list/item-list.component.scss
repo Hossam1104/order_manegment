@@ -98,7 +98,7 @@
     
     @media (max-width: 768px) {
       width: 100%;
-      flex-direction: column;
+      flex-direction: row;
     }
   }
   
@@ -110,7 +110,9 @@
     border-radius: v.$radius-btn;
     
     @media (max-width: 768px) {
-      width: 100%; // Full width on mobile
+      flex: 1;
+      padding: 0 v.$spacing-1;
+      font-size: 13px;
     }
     
     mat-icon {
@@ -137,6 +139,7 @@
     
     .search-field {
       width: 320px;
+      max-width: 100%;
       
       .mdc-text-field--outlined {
         border-radius: v.$radius-btn !important;
