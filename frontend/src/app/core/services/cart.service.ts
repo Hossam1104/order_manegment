@@ -1,4 +1,4 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, effect, signal } from '@angular/core';
 import { ItemDto } from '../models/item.model';
 
 export interface CartItem {
@@ -6,11 +6,29 @@ export interface CartItem {
     quantity: number;
 }
 
+const CART_STORAGE_KEY = 'om_cart';
+
 @Injectable({
     providedIn: 'root'
 })
 export class CartService {
-    cartItems = signal<CartItem[]>([]);
+    cartItems = signal<CartItem[]>(this.loadCart());
+
+    constructor() {
+        effect(() => {
+            const items = this.cartItems();
+            localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+        });
+    }
+
+    private loadCart(): CartItem[] {
+        try {
+            const raw = localStorage.getItem(CART_STORAGE_KEY);
+            return raw ? JSON.parse(raw) : [];
+        } catch {
+            return [];
+        }
+    }
 
     itemCount = computed(() => this.cartItems().reduce((sum: number, ci: CartItem) => sum + ci.quantity, 0));
 
