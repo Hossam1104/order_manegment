@@ -126,8 +126,8 @@
     gap: v.$spacing-2;
   }
   @media (max-width: 480px) { 
-    grid-template-columns: repeat(2, 1fr); 
-    gap: v.$spacing-1;
+    grid-template-columns: 1fr; 
+    gap: v.$spacing-2;
   }
 }
 
