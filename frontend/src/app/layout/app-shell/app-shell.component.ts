@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 
 import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
 import { CartService } from '../../core/services/cart.service';
+import { ThemeService } from '../../core/services/theme.service';
 
 @Component({
   selector: 'app-app-shell',
@@ -41,6 +42,7 @@ export class AppShellComponent implements OnInit, OnDestroy {
   cartService = inject(CartService);
   breakpointObserver = inject(BreakpointObserver);
   router = inject(Router);
+  private themeService = inject(ThemeService);
 
   cartCount = computed(() => this.cartService.itemCount());
   currentLang = signal(localStorage.getItem('om_lang') || 'en');
@@ -53,6 +55,14 @@ export class AppShellComponent implements OnInit, OnDestroy {
   private destroySub = new Subscription();
 
   constructor() {
+    // Restore stored language on startup
+    const storedLang = this.currentLang();
+    if (storedLang !== 'en') {
+      this.translate.use(storedLang);
+      document.documentElement.dir = storedLang === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = storedLang;
+    }
+
     this.translate.onLangChange.subscribe(event => {
       this.currentLang.set(event.lang);
     });
