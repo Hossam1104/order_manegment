@@ -125,7 +125,10 @@
     grid-template-columns: repeat(2, 1fr); 
     gap: v.$spacing-2;
   }
-  @media (max-width: 480px) { grid-template-columns: 1fr; }
+  @media (max-width: 480px) { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: v.$spacing-1;
+  }
 }
 
 // ==========================================
