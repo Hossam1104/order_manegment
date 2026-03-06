@@ -1,0 +1,127 @@
+@use 'variables' as v;
+
+// ==========================================
+// MIXIN LIBRARY
+// ==========================================
+
+@mixin premium-card {
+  background: var(--color-surface);
+  border-radius: v.$radius-card;
+  box-shadow: v.$shadow-card;
+  border: 1px solid var(--color-border);
+  transition: transform v.$transition-smooth, box-shadow v.$transition-smooth, border-color v.$transition-normal;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: v.$shadow-hover;
+    border-color: rgba(v.$color-primary, 0.2);
+  }
+}
+
+@mixin glass-panel {
+  background: v.$glass-bg;
+  backdrop-filter: blur(v.$glass-blur);
+  -webkit-backdrop-filter: blur(v.$glass-blur);
+  border: v.$glass-border;
+
+  .dark-theme & {
+    background: v.$glass-bg-dark;
+  }
+}
+
+@mixin modern-button {
+  border-radius: v.$radius-btn;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-transform: none;
+  transition: all v.$transition-fast;
+  position: relative;
+  overflow: hidden;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  // Ripple shimmer on hover
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+  &:hover::after {
+    transform: translateX(100%);
+  }
+}
+
+@mixin gradient-text {
+  background: v.$gradient-primary;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@mixin text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin page-header {
+  display: flex;
+  align-items: center;
+  gap: v.$spacing-2;
+  margin-bottom: v.$spacing-4;
+
+  .page-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: v.$radius-card;
+    background: v.$gradient-primary;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .page-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 0;
+    color: var(--color-text-main);
+  }
+
+  .page-subtitle {
+    margin: 2px 0 0;
+    color: var(--color-text-muted);
+    font-size: 14px;
+  }
+}
+
+@mixin floating-label-field {
+  width: 100%;
+  
+  .mdc-text-field--outlined {
+    border-radius: v.$radius-btn !important;
+  }
+}
+
+// SAR Riyal currency symbol mixin
+@mixin sar-symbol {
+  font-family: 'Inter', sans-serif;
+  &::after {
+    content: ' ر.س';
+    font-size: 0.75em;
+    opacity: 0.7;
+    margin-inline-start: 4px;
+  }
+}

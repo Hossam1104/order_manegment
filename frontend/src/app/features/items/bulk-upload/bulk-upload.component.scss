@@ -1,0 +1,120 @@
+@use 'styles/variables' as v;
+
+.section {
+    margin-bottom: v.$spacing-4;
+
+    h3 {
+        margin: 0 0 v.$spacing-1 0;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .hint {
+        margin: 0 0 v.$spacing-2 0;
+        color: var(--color-text-muted);
+        font-size: 13px;
+    }
+}
+
+.drop-zone {
+    border: 2px dashed var(--color-border);
+    border-radius: v.$radius-card;
+    padding: v.$spacing-5 v.$spacing-3;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+
+    &:hover {
+        border-color: var(--color-primary);
+        background: rgba(var(--color-primary-rgb, 63, 81, 181), 0.04);
+    }
+
+    .upload-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+        color: var(--color-text-muted);
+    }
+
+    p {
+        margin: v.$spacing-1 0 0;
+        &.hint {
+            font-size: 12px;
+        }
+    }
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-2;
+    padding: v.$spacing-2 v.$spacing-3;
+    background: var(--color-hover);
+    border-radius: v.$radius-card;
+
+    mat-icon {
+        color: var(--color-primary);
+    }
+
+    .file-name {
+        font-weight: 500;
+    }
+
+    .file-size {
+        color: var(--color-text-muted);
+        font-size: 13px;
+    }
+}
+
+.success-message {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-2;
+    padding: v.$spacing-2 v.$spacing-3;
+    background: rgba(76, 175, 80, 0.1);
+    color: #2e7d32;
+    border-radius: v.$radius-card;
+    margin-top: v.$spacing-3;
+
+    mat-icon {
+        color: #2e7d32;
+    }
+}
+
+.error-section {
+    margin-top: v.$spacing-3;
+
+    h4 {
+        display: flex;
+        align-items: center;
+        gap: v.$spacing-1;
+        margin: 0 0 v.$spacing-2 0;
+        color: #d32f2f;
+        font-size: 14px;
+
+        mat-icon {
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .error-list {
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid rgba(211, 47, 47, 0.2);
+        border-radius: v.$radius-card;
+        background: rgba(211, 47, 47, 0.04);
+
+        .error-row {
+            padding: v.$spacing-1 v.$spacing-2;
+            font-size: 13px;
+            color: #d32f2f;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.1);
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+}

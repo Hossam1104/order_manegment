@@ -1,0 +1,18 @@
+<div class="store-hero">
+    <div class="hero-content">
+        <h1 class="hero-title">{{ 'STORE.HERO_TITLE' | translate }}</h1>
+        <p class="hero-subtitle">{{ 'STORE.HERO_SUBTITLE' | translate }}</p>
+    </div>
+</div>
+
+<div class="product-grid" [@listAnimation]="items().length">
+    @for (item of items(); track item.id) {
+    <app-product-card [item]="item"></app-product-card>
+    } @empty {
+    <div class="empty-state">
+        <mat-icon class="empty-icon">inventory_2</mat-icon>
+        <h3>{{ 'STORE.NO_PRODUCTS' | translate }}</h3>
+        <p>{{ 'STORE.NO_PRODUCTS_HINT' | translate }}</p>
+    </div>
+    }
+</div>

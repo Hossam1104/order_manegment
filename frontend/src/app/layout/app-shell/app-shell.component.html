@@ -1,0 +1,82 @@
+<mat-sidenav-container class="app-sidenav-container" [hasBackdrop]="false" [dir]="currentDir()">
+
+    <!-- Left Navigation Sidebar (Collapsible) -->
+    <mat-sidenav #navDrawer mode="side" position="start" [opened]="true" class="main-nav-sidebar"
+        [class.collapsed]="sidebarCollapsed()">
+
+        <div class="sidebar-content">
+            <!-- Logo area -->
+            <div class="sidebar-brand" [class.collapsed]="sidebarCollapsed()">
+                <div class="brand-icon">
+                    <mat-icon>storefront</mat-icon>
+                </div>
+                @if (!sidebarCollapsed()) {
+                <span class="brand-text">OrderHub</span>
+                }
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <!-- Navigation Links -->
+            <mat-nav-list class="nav-list">
+
+                <a mat-list-item routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+                    [matTooltip]="sidebarCollapsed() ? ('NAV.STOREFRONT' | translate) : ''" matTooltipPosition="after">
+                    <mat-icon matListItemIcon>store</mat-icon>
+                    @if (!sidebarCollapsed()) {
+                    <div matListItemTitle>{{ 'NAV.STOREFRONT' | translate }}</div>
+                    }
+                </a>
+
+                <a mat-list-item routerLink="/admin" routerLinkActive="active-link"
+                    [matTooltip]="sidebarCollapsed() ? ('NAV.ALL_ITEMS' | translate) : ''" matTooltipPosition="after">
+                    <mat-icon matListItemIcon>inventory_2</mat-icon>
+                    @if (!sidebarCollapsed()) {
+                    <div matListItemTitle>{{ 'NAV.ALL_ITEMS' | translate }}</div>
+                    }
+                </a>
+
+                <a mat-list-item routerLink="/cart" routerLinkActive="active-link"
+                    [matTooltip]="sidebarCollapsed() ? ('NAV.SHOPPING_CART' | translate) : ''"
+                    matTooltipPosition="after">
+                    <mat-icon matListItemIcon [matBadge]="cartCount()" [matBadgeHidden]="cartCount() === 0"
+                        matBadgeColor="warn" matBadgeSize="small">
+                        shopping_cart
+                    </mat-icon>
+                    @if (!sidebarCollapsed()) {
+                    <div matListItemTitle>{{ 'NAV.SHOPPING_CART' | translate }}</div>
+                    }
+                </a>
+
+                <mat-divider class="nav-divider"></mat-divider>
+
+                <a mat-list-item routerLink="/admin/configuration" routerLinkActive="active-link"
+                    [matTooltip]="sidebarCollapsed() ? ('NAV.SETTINGS' | translate) : ''" matTooltipPosition="after">
+                    <mat-icon matListItemIcon>settings</mat-icon>
+                    @if (!sidebarCollapsed()) {
+                    <div matListItemTitle>{{ 'NAV.SETTINGS' | translate }}</div>
+                    }
+                </a>
+
+            </mat-nav-list>
+        </div>
+
+        <!-- Collapse Toggle -->
+        <div class="sidebar-footer">
+            <button mat-icon-button (click)="toggleSidebar()" class="collapse-toggle-btn"
+                [matTooltip]="sidebarCollapsed() ? ('NAV.EXPAND' | translate) : ('NAV.COLLAPSE' | translate)"
+                matTooltipPosition="after">
+                <mat-icon>{{ sidebarCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+            </button>
+        </div>
+    </mat-sidenav>
+
+    <!-- Main Scrollable Content -->
+    <mat-sidenav-content class="app-main-content">
+        <app-top-navbar (toggleSidebar)="toggleSidebar()"></app-top-navbar>
+        <div class="store-container page-enter">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

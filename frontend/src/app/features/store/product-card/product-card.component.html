@@ -1,0 +1,30 @@
+<div class="product-card" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false" (click)="openQuickView()">
+    <div class="image-wrapper">
+        <!-- Image zooms slightly internally via animation trigger -->
+        <img [src]="getImageUrl() || 'assets/placeholder-image.png'" alt="Product image" title="Product image"
+            [attr.alt]="getItemName(item)" [attr.title]="getItemName(item)" class="product-image"
+            [@cardHoverZoom]="isHovered ? 'hovered' : 'default'" />
+
+        <!-- Animated overlay action -->
+        <div class="hover-actions" [@fadeSlideInOut]>
+            <button mat-flat-button class="add-to-cart-btn" [class.success-state]="addedToCart"
+                (click)="addToCart($event, item)">
+                <mat-icon>{{ addedToCart ? 'check_circle' : 'shopping_cart' }}</mat-icon>
+                {{ (addedToCart ? 'FORM.SAVE' : 'STORE.ADD_TO_CART') | translate }}
+            </button>
+        </div>
+    </div>
+
+    <div class="product-info">
+        <div class="product-header">
+            <h3 class="product-name">{{ getItemName(item) }}</h3>
+            @if(item?.vatPercentage > 0) {
+            <span class="vat-badge">{{ 'STORE.VAT_INCL' | translate }}</span>
+            }
+        </div>
+        <div class="product-price">
+            {{ item?.netTotal | number:'1.0-0' }}
+            <span class="sar-icon"></span>
+        </div>
+    </div>
+</div>

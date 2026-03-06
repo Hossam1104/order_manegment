@@ -1,0 +1,137 @@
+<div class="container admin-container">
+    <!-- Header -->
+    <div class="header-row">
+        <button mat-icon-button routerLink="/" [matTooltip]="'NAV.STOREFRONT' | translate" class="back-btn">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div>
+            <h2 class="header-title">{{ 'ITEMS.TITLE' | translate }}</h2>
+            <p class="text-muted header-subtitle">{{ 'ITEMS.SUBTITLE' | translate }}</p>
+        </div>
+        <span class="spacer"></span>
+        <button mat-stroked-button color="primary" class="bulk-btn" (click)="openBulkUploadDialog()">
+            <mat-icon>upload_file</mat-icon>
+            {{ 'BULK_UPLOAD.TITLE' | translate }}
+        </button>
+        <button mat-flat-button color="primary" class="add-btn" (click)="openAddDialog()">
+            <mat-icon>add</mat-icon>
+            {{ 'ITEMS.ADD' | translate }}
+        </button>
+    </div>
+
+    <!-- Admin Data Card -->
+    <div class="admin-card">
+        <div class="card-toolbar">
+            <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+                <mat-icon matPrefix>search</mat-icon>
+                <input matInput placeholder="Search inventory..." (input)="onSearchChange($any($event.target).value)">
+            </mat-form-field>
+        </div>
+
+        <!-- Loading bar -->
+        @if (loading()) {
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+
+        <!-- Data table -->
+        @if (items().length > 0) {
+        <div class="table-container">
+            <table mat-table [dataSource]="items()" matSort (matSortChange)="onSortChange($event)">
+
+                <!-- Image Column -->
+                <ng-container matColumnDef="image">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'ITEMS.IMAGE' | translate }}</th>
+                    <td mat-cell *matCellDef="let item">
+                        <img [src]="item.imageUrl || 'assets/placeholder-image.png'" width="48" height="48"
+                            class="item-thumb" alt="item image">
+                    </td>
+                </ng-container>
+
+                <!-- Item Code Column -->
+                <ng-container matColumnDef="itemCode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'ITEMS.CODE' | translate }}</th>
+                    <td mat-cell *matCellDef="let item"><span class="code-badge">{{ item.itemCode }}</span></td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>{{ currentLang() === 'ar' ? ('ITEMS.NAME_AR' | translate) :
+                        ('ITEMS.NAME_EN' | translate) }}</th>
+                    <td mat-cell *matCellDef="let item">
+                        <div class="item-name-cell">{{ getName(item) }}</div>
+                    </td>
+                </ng-container>
+
+                <!-- Category Column -->
+                <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'ITEMS.CATEGORY' | translate }}</th>
+                    <td mat-cell *matCellDef="let item">
+                        <span class="category-badge" *ngIf="item.category">{{ item.category }}</span>
+                    </td>
+                </ng-container>
+
+                <!-- Price Column -->
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'ITEMS.PRICE' | translate }}</th>
+                    <td mat-cell *matCellDef="let item">{{ item.price | number:'1.2-2' }}</td>
+                </ng-container>
+
+                <!-- VAT Column -->
+                <ng-container matColumnDef="vatPercentage">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'ITEMS.VAT' | translate }}</th>
+                    <td mat-cell *matCellDef="let item">
+                        <span class="vat-badge" [class.active]="item.vatPercentage > 0">
+                            {{ item.vatPercentage }}%
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- Net Total Column -->
+                <ng-container matColumnDef="netTotal">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'ITEMS.NET_TOTAL' | translate }}</th>
+                    <td mat-cell *matCellDef="let item"><strong>{{ item.netTotal | number:'1.2-2' }}</strong></td>
+                </ng-container>
+
+                <!-- Created At Column -->
+                <ng-container matColumnDef="createdAt">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'ITEMS.CREATED' | translate }}</th>
+                    <td mat-cell *matCellDef="let item" class="text-muted">{{ item.createdAt | date:'dd/MM/yyyy HH:mm'
+                        }}</td>
+                </ng-container>
+
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="actions-header"></th>
+                    <td mat-cell *matCellDef="let item" class="actions-cell">
+                        <button mat-icon-button (click)="openEditDialog(item)" [matTooltip]="'ITEMS.EDIT' | translate">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="confirmDelete(item)"
+                            [matTooltip]="'ITEMS.DELETE' | translate">
+                            <mat-icon>delete_outline</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [length]="totalCount()" [pageSize]="pageSize()" [pageSizeOptions]="[10, 25, 50]"
+                (page)="onPageChange($event)" showFirstLastButtons class="custom-paginator">
+            </mat-paginator>
+        </div>
+        }
+
+        <!-- Empty state -->
+        @if (!loading() && items().length === 0) {
+        <div class="empty-state">
+            <div class="empty-illustration">
+                <mat-icon>inventory_2</mat-icon>
+            </div>
+            <h3>No Items Found</h3>
+            <p>{{ 'ITEMS.EMPTY' | translate }}</p>
+        </div>
+        }
+    </div>
+</div>

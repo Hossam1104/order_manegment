@@ -1,0 +1,241 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+:host {
+  display: block;
+  height: 100%; // Takes full height from AppShell layout
+  width: 100%;
+}
+
+.cart-drawer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-surface);
+}
+
+.cart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: v.$spacing-3 v.$spacing-4;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0; // Essential property to prevent squishing
+
+  .title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-2;
+
+    .cart-icon {
+      color: var(--color-text-main);
+    }
+    
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    .badge {
+      background: var(--color-primary);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-left: v.$spacing-1;
+    }
+  }
+
+  .close-btn {
+    color: var(--color-text-muted);
+    &:hover { color: var(--color-text-main); }
+  }
+}
+
+.cart-items-list {
+  flex: 1;                 // Liquid sizing fills space between sticky header & footer
+  overflow-y: auto;        // Core requirement: independent scrolling list
+  padding: v.$spacing-3 v.$spacing-4;
+  
+  // Custom minimal scrollbar
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
+  &::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: var(--color-text-muted);
+
+  .empty-illustration {
+    background: var(--color-hover);
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: v.$spacing-3;
+    
+    mat-icon { font-size: 40px; width: 40px; height: 40px; color: var(--color-text-muted); opacity: 0.5; }
+  }
+
+  p { margin: 0 0 v.$spacing-4 0; font-size: 16px; }
+  
+  button {
+    font-weight: 500;
+    border-color: var(--color-border);
+  }
+}
+
+.cart-item {
+  display: flex;
+  gap: v.$spacing-3;
+  padding: v.$spacing-3 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  
+  &:last-child { border-bottom: none; }
+
+  .item-visual {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: v.$radius-img;
+    background: var(--color-hover);
+    overflow: hidden;
+
+    img { width: 100%; height: 100%; object-fit: cover; }
+  }
+
+  .item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+
+      .item-name {
+        font-weight: 500;
+        font-size: 14px;
+        color: var(--color-text-main);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .remove-btn {
+        width: 24px; height: 24px; padding: 0;
+        display: flex; align-items: center; justify-content: center;
+        margin-left: v.$spacing-1;
+        opacity: 0.5;
+        &:hover { opacity: 1; color: v.$color-danger; }
+        mat-icon { font-size: 18px; width: 18px; height: 18px; }
+      }
+    }
+
+    .item-price {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      margin-bottom: v.$spacing-2;
+    }
+
+    .item-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto; // Push to bottom
+
+      .qty-stepper {
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--color-border);
+        border-radius: 6px;
+        height: 32px;
+        overflow: hidden;
+
+        .qty-btn {
+          width: 28px; height: 100%;
+          background: transparent;
+          border: none; cursor: pointer;
+          display: flex; align-items: center; justify-content: center;
+          color: var(--color-text-main);
+          &:hover:not(:disabled) { background: var(--color-hover); }
+          &:disabled { opacity: 0.3; cursor: not-allowed; }
+          mat-icon { font-size: 16px; width: 16px; height: 16px; }
+        }
+
+        .qty-input {
+          width: 32px; height: 100%;
+          text-align: center;
+          border: none;
+          font-weight: 600; font-size: 13px;
+          color: var(--color-text-main);
+          background: transparent;
+          appearance: textfield; // Remove arrows
+          &::-webkit-inner-spin-button, &::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+          &:focus { outline: none; }
+        }
+      }
+
+      .line-total {
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--color-text-main);
+      }
+    }
+  }
+}
+
+.cart-footer {
+  flex-shrink: 0; // Essential property to prevent squishing
+  padding: v.$spacing-4;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface); // Could also be slightly tinted bg
+
+  .summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: v.$spacing-2;
+    font-size: 14px;
+    
+    &.text-muted { color: var(--color-text-muted); }
+
+    &.grand-total {
+      margin-top: v.$spacing-3;
+      padding-top: v.$spacing-3;
+      border-top: 1px dashed var(--color-border);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--color-text-main);
+      margin-bottom: 0;
+    }
+  }
+
+  .checkout-actions {
+    margin-top: v.$spacing-4;
+    
+    .checkout-btn {
+      width: 100%;
+      height: 48px;
+      font-size: 16px;
+      @include m.modern-button;
+      background-color: var(--color-primary);
+      color: white;
+      
+      &:disabled {
+        background-color: var(--color-border);
+        color: var(--color-text-muted);
+      }
+    }
+  }
+}

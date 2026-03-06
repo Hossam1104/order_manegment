@@ -1,0 +1,156 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+// ==========================================
+// PRODUCT CARD - Premium Design
+// ==========================================
+.product-card {
+  background: var(--color-surface);
+  border-radius: v.$radius-card;
+  border: 1px solid var(--color-border);
+  box-shadow: v.$shadow-soft;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: all v.$transition-smooth;
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: v.$shadow-hover;
+    border-color: rgba(v.$color-primary, 0.2);
+
+    .image-wrapper::after {
+      opacity: 1;
+    }
+  }
+
+  // ==========================================
+  // IMAGE SECTION
+  // ==========================================
+  .image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--color-hover) 0%, var(--color-border) 100%);
+    
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform-origin: center center;
+      transition: transform v.$transition-smooth;
+    }
+    
+    .hover-actions {
+      position: absolute;
+      bottom: v.$spacing-2;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      padding: 0 v.$spacing-2;
+      z-index: 10;
+      
+      .add-to-cart-btn {
+        width: 100%;
+        font-weight: 600;
+        height: 42px;
+        border-radius: v.$radius-btn;
+        background: v.$gradient-primary !important;
+        box-shadow: 0 8px 25px rgba(v.$color-primary, 0.35);
+        color: white;
+        letter-spacing: 0.3px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        
+        mat-icon {
+          margin-right: 6px;
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+          transition: transform 0.3s ease;
+        }
+
+        &.success-state {
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+          box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+          transform: scale(1.05);
+
+          mat-icon {
+            transform: scale(1.2) rotate(360deg);
+          }
+        }
+      }
+    }
+    
+    // Gradient overlay on hover
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 50%;
+      background: linear-gradient(to top, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 100%);
+      opacity: 0;
+      transition: opacity v.$transition-normal;
+      pointer-events: none;
+    }
+  }
+
+  // ==========================================
+  // INFO SECTION
+  // ==========================================
+  .product-info {
+    padding: v.$spacing-2 v.$spacing-3 v.$spacing-3;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    
+    .product-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: v.$spacing-1;
+      margin-bottom: v.$spacing-1;
+      
+      .product-name {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--color-text-main);
+        @include m.text-ellipsis;
+        line-height: 1.4;
+      }
+      
+      .vat-badge {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        color: var(--color-primary);
+        background: rgba(v.$color-primary, 0.08);
+        padding: 3px 8px;
+        border-radius: v.$radius-pill;
+        white-space: nowrap;
+      }
+    }
+    
+    .product-price {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: v.$spacing-1;
+      display: flex;
+      align-items: baseline;
+      
+      .sar-label {
+        font-size: 12px;
+        font-weight: 500;
+        opacity: 0.6;
+        margin-inline-start: 4px;
+      }
+    }
+  }
+}

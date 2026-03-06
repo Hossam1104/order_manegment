@@ -1,0 +1,14 @@
+<mat-toolbar class="app-toolbar">
+    <!-- Sidebar Toggle (Hamburger) -->
+    <button mat-icon-button class="menu-toggle" (click)="toggleSidebar.emit()"
+        [matTooltip]="'NAV.TOGGLE_MENU' | translate">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <!-- Brand / Logo -->
+    <div class="brand">
+        <span class="app-title">{{ 'APP_TITLE' | translate }}</span>
+    </div>
+
+    <span class="spacer"></span>
+</mat-toolbar>

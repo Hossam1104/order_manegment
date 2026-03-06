@@ -1,0 +1,101 @@
+// ==========================================
+// DESIGN SYSTEM: Variables
+// Premium E-commerce Design Tokens
+// ==========================================
+
+// Spacing (8px Modular Scale)
+$spacing-1: 8px;
+$spacing-2: 16px;
+$spacing-3: 24px;
+$spacing-4: 32px;
+$spacing-5: 40px;
+$spacing-6: 48px;
+$spacing-8: 64px;
+
+// Container
+$max-w-container: 1400px;
+
+// ==========================================
+// COLOR SYSTEM - Light Mode
+// ==========================================
+$color-primary: #635BFF;         // Vibrant indigo (Stripe-inspired)
+$color-primary-light: #818CF8;   // Lighter variant
+$color-primary-dark: #4F46E5;    // Darker variant
+$color-accent: #0EA5E9;          // Sky blue accent
+$color-accent-warm: #F59E0B;     // Amber accent for badges
+
+$color-bg: #F8FAFC;              // Soft cool white
+$color-surface: #FFFFFF;         // Card white
+$color-text-main: #0F172A;       // Deep slate
+$color-text-muted: #64748B;      // Slate muted
+$color-border: #E2E8F0;          // Light border
+$color-success: #10B981;         // Emerald green
+$color-danger: #EF4444;          // Red
+$color-hover: #F1F5F9;           // Hover state (slate-100)
+
+// ==========================================
+// COLOR SYSTEM - Dark Mode
+// ==========================================
+$color-bg-dark: #0F172A;         // Slate 900 (very deep)
+$color-surface-dark: #1E293B;    // Slate 800
+$color-text-main-dark: #F1F5F9;  // Slate 100
+$color-text-muted-dark: #94A3B8; // Slate 400
+$color-border-dark: #334155;     // Slate 700
+$color-hover-dark: #1E293B;      // Slate 800
+
+// ==========================================
+// GRADIENTS
+// ==========================================
+$gradient-primary: linear-gradient(135deg, $color-primary 0%, $color-accent 100%);
+$gradient-hero: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, $color-primary 100%);
+$gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+$gradient-sidebar: linear-gradient(180deg, $color-primary 0%, darken($color-primary, 12%) 100%);
+$gradient-card-hover: linear-gradient(135deg, rgba($color-primary, 0.02) 0%, rgba($color-accent, 0.04) 100%);
+
+// ==========================================
+// TYPOGRAPHY
+// ==========================================
+$font-family-en: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-family-ar: 'Cairo', 'Noto Sans Arabic', sans-serif;
+
+// ==========================================
+// RADII, SHADOWS & EFFECTS
+// ==========================================
+$radius-sm: 6px;
+$radius-card: 16px;
+$radius-btn: 10px;
+$radius-img: 12px;
+$radius-pill: 100px;
+
+$shadow-soft: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+$shadow-card: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+$shadow-hover: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+$shadow-drawer: -4px 0 24px rgba(0, 0, 0, 0.08);
+$shadow-glow: 0 0 40px rgba($color-primary, 0.15);
+
+// Glassmorphism
+$glass-bg: rgba(255, 255, 255, 0.7);
+$glass-bg-dark: rgba(15, 23, 42, 0.8);
+$glass-blur: 12px;
+$glass-border: 1px solid rgba(255, 255, 255, 0.18);
+
+// ==========================================
+// TIMING & ANIMATIONS
+// ==========================================
+$transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-smooth: 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+$transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+// ==========================================
+// Z-INDEX SCALE
+// ==========================================
+$z-index-navbar: 1000;
+$z-index-drawer: 2000;
+$z-index-modal: 3000;
+
+// ==========================================
+// SIDEBAR
+// ==========================================
+$sidebar-expanded: 260px;
+$sidebar-collapsed: 72px;

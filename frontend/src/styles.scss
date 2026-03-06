@@ -1,0 +1,313 @@
+// ==========================================
+// GLOBAL STYLES
+// Premium E-commerce Design System
+// ==========================================
+@use '@angular/material' as mat;
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+@include mat.core();
+
+// Light theme
+$light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$violet-palette,
+    tertiary: mat.$cyan-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+// Dark theme
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$violet-palette,
+    tertiary: mat.$cyan-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+// Google Fonts - Premium Typography Stack
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+// ==========================================
+// CSS CUSTOM PROPERTIES
+// ==========================================
+:root {
+  @include mat.all-component-themes($light-theme);
+
+  --color-primary: #{v.$color-primary};
+  --color-primary-light: #{v.$color-primary-light};
+  --color-primary-dark: #{v.$color-primary-dark};
+  --color-accent: #{v.$color-accent};
+  --color-bg: #{v.$color-bg};
+  --color-surface: #{v.$color-surface};
+  --color-text-main: #{v.$color-text-main};
+  --color-text-muted: #{v.$color-text-muted};
+  --color-border: #{v.$color-border};
+  --color-hover: #{v.$color-hover};
+  --color-success: #{v.$color-success};
+  --color-danger: #{v.$color-danger};
+}
+
+.dark-theme {
+  @include mat.all-component-colors($dark-theme);
+
+  --color-primary: #{v.$color-primary};
+  --color-primary-light: #{v.$color-primary-light};
+  --color-primary-dark: #{v.$color-primary-dark};
+  --color-accent: #{v.$color-accent};
+  --color-bg: #{v.$color-bg-dark};
+  --color-surface: #{v.$color-surface-dark};
+  --color-text-main: #{v.$color-text-main-dark};
+  --color-text-muted: #{v.$color-text-muted-dark};
+  --color-border: #{v.$color-border-dark};
+  --color-hover: #{v.$color-hover-dark};
+}
+
+// ==========================================
+// GLOBAL RESETS & BASE
+// ==========================================
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: v.$font-family-en;
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  transition: background-color v.$transition-normal, color v.$transition-normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+
+  // RTL Support
+  &[dir="rtl"] {
+    font-family: v.$font-family-ar;
+  }
+}
+
+// ==========================================
+// SELECTION STYLING
+// ==========================================
+::selection {
+  background: rgba(v.$color-primary, 0.15);
+  color: var(--color-text-main);
+}
+
+// ==========================================
+// SCROLLBAR STYLING
+// ==========================================
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+  &:hover {
+    background: var(--color-text-muted);
+  }
+}
+
+// ==========================================
+// LAYOUT UTILITIES
+// ==========================================
+.container {
+  max-width: v.$max-w-container;
+  margin: 0 auto;
+  padding: v.$spacing-4;
+}
+
+.text-muted {
+  color: var(--color-text-muted) !important;
+}
+
+// ==========================================
+// GLOBAL BUTTON ENHANCEMENTS
+// ==========================================
+.mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-flat-button, .mat-mdc-outlined-button {
+  @include m.modern-button;
+}
+
+// Primary gradient buttons
+.mat-mdc-flat-button.mat-primary,
+.mat-mdc-raised-button.mat-primary {
+  background: v.$gradient-primary !important;
+  border: none;
+  
+  &:hover {
+    box-shadow: 0 8px 25px rgba(v.$color-primary, 0.35);
+  }
+}
+
+// ==========================================
+// GLOBAL MAT CARD OVERRIDES
+// ==========================================
+.mat-mdc-card {
+  border-radius: v.$radius-card !important;
+  border: 1px solid var(--color-border);
+  box-shadow: v.$shadow-card !important;
+  transition: box-shadow v.$transition-normal, border-color v.$transition-normal;
+}
+
+// ==========================================
+// SAR CURRENCY SYMBOL (Official Riyal Logo)
+// ==========================================
+.sar-icon {
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  vertical-align: -0.05em;
+  margin-inline-start: 4px;
+  background: currentColor;
+  -webkit-mask: url('/assets/icons/sar-symbol.svg') no-repeat center / contain;
+  mask: url('/assets/icons/sar-symbol.svg') no-repeat center / contain;
+
+  &.sar-sm { width: 14px; height: 14px; }
+  &.sar-md { width: 18px; height: 18px; }
+  &.sar-lg { width: 24px; height: 24px; }
+}
+
+// ==========================================
+// BADGE & CHIP UTILITIES
+// ==========================================
+.premium-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: v.$radius-pill;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+
+  &.badge-primary {
+    background: rgba(v.$color-primary, 0.1);
+    color: v.$color-primary;
+  }
+  &.badge-success {
+    background: rgba(v.$color-success, 0.1);
+    color: v.$color-success;
+  }
+  &.badge-warn {
+    background: rgba(v.$color-accent-warm, 0.12);
+    color: darken(v.$color-accent-warm, 10%);
+  }
+}
+
+// ==========================================
+// ANIMATION KEYFRAMES
+// ==========================================
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(v.$color-primary, 0.2); }
+  50% { box-shadow: 0 0 20px 4px rgba(v.$color-primary, 0.15); }
+}
+
+// Product Quick View Dialog styling
+.product-quick-view-dialog {
+  .mat-mdc-dialog-container {
+    border-radius: v.$radius-card !important;
+    overflow: hidden;
+  }
+}
+
+// ==========================================
+// PAGE TRANSITION UTILITY
+// ==========================================
+.page-enter {
+  animation: fadeInUp 0.4s v.$transition-smooth both;
+}
+
+// ==========================================
+// GLOBAL PRINT STYLES — A4 INVOICE
+// ==========================================
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 15mm 12mm;
+  }
+
+  // Hide everything outside the invoice
+  app-top-navbar,
+  .main-nav-sidebar,
+  mat-sidenav,
+  .mat-drawer {
+    display: none !important;
+    width: 0 !important;
+  }
+
+  // Remove sidenav layout constraints
+  .mat-drawer-container,
+  .mat-sidenav-container,
+  .app-sidenav-container {
+    overflow: visible !important;
+  }
+
+  .mat-sidenav-content,
+  .mat-drawer-content,
+  .app-main-content {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  body, html {
+    height: auto !important;
+    overflow: visible !important;
+    background: white !important;
+    color: black !important;
+  }
+
+  app-root,
+  app-app-shell {
+    display: block !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  // Generic print helpers
+  .hidden-print {
+    display: none !important;
+  }
+
+  .hidden-screen {
+    display: flex !important;
+  }
+
+  // Remove shadows, decorations
+  .mat-mdc-card {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}

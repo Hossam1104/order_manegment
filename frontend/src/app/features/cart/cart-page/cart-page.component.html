@@ -1,0 +1,167 @@
+<div class="cart-page-container" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+
+    <!-- Invoice Header (Visible in print) -->
+    <div class="print-header hidden-screen">
+        <div class="invoice-brand">
+            <div class="invoice-logo">
+                <mat-icon>store</mat-icon>
+            </div>
+            <h1>{{ 'APP_TITLE' | translate }}</h1>
+        </div>
+        <div class="invoice-details">
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <span class="meta-label">{{ 'CART.INVOICE_NO' | translate }}</span>
+                    <span class="meta-value">INV-{{ currentDate | date:'yyMMdd' }}-{{ currentDate | date:'HHmm'
+                        }}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">{{ 'CART.DATE' | translate }}</span>
+                    <span class="meta-value">{{ currentDate | date:'dd MMM yyyy, HH:mm' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Header (Screen only) -->
+    <div class="page-header hidden-print">
+        <div class="title-wrapper">
+            <button mat-icon-button routerLink="/" [matTooltip]="'NAV.STOREFRONT' | translate" class="back-btn">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="page-icon">
+                <mat-icon>shopping_cart</mat-icon>
+            </div>
+            <h1>{{ 'CART.TITLE' | translate }}</h1>
+            @if (cartService.itemCount() > 0) {
+            <span class="badge">{{ cartService.itemCount() }} {{ 'CART.ITEMS_COUNT' | translate }}</span>
+            }
+        </div>
+
+        <div class="header-actions">
+            @if(cartService.itemCount() > 0) {
+            <button mat-stroked-button color="warn" (click)="clearCart()">
+                <mat-icon>remove_shopping_cart</mat-icon>
+                {{ 'CART.CLEAR' | translate }}
+            </button>
+            <button mat-flat-button color="primary" (click)="printInvoice()">
+                <mat-icon>print</mat-icon>
+                {{ 'CART.PRINT_INVOICE' | translate }}
+            </button>
+            }
+        </div>
+    </div>
+
+    <div class="cart-content">
+        <!-- Main Cart List -->
+        <mat-card class="cart-items-card" appearance="outlined">
+            @if (cartService.itemCount() === 0) {
+            <div class="empty-state hidden-print">
+                <div class="empty-illustration">
+                    <mat-icon>shopping_cart</mat-icon>
+                </div>
+                <h2>{{ 'CART.EMPTY' | translate }}</h2>
+                <p class="text-muted">{{ 'CART.EMPTY_HINT' | translate }}</p>
+                <button mat-stroked-button routerLink="/">{{ 'CART.CONTINUE_SHOPPING' | translate }}</button>
+            </div>
+            } @else {
+
+            <!-- Table Header for wider screens/invoice prints -->
+            <div class="cart-table-header text-muted">
+                <div class="col-product">{{ 'CART.PRODUCT' | translate }}</div>
+                <div class="col-price">{{ 'CART.UNIT_PRICE' | translate }}</div>
+                <div class="col-qty">{{ 'CART.QUANTITY' | translate }}</div>
+                <div class="col-total">{{ 'CART.LINE_TOTAL' | translate }}</div>
+                <div class="col-action hidden-print"></div>
+            </div>
+
+            <div class="cart-items-list" [@listAnimation]="cartService.cartItems().length">
+                @for (cartItem of cartService.cartItems(); track cartItem.item.id) {
+                <div class="cart-row">
+                    <!-- Column 1: Product -->
+                    <div class="col-product">
+                        <img [src]="getImageUrl(cartItem) || 'assets/placeholder-image.png'"
+                            [alt]="getItemName(cartItem)" title="Product image" [attr.title]="getItemName(cartItem)"
+                            class="item-visual hidden-print">
+                        <div class="item-meta">
+                            <span class="item-name">{{ getItemName(cartItem) }}</span>
+                            <span class="item-code text-muted">SKU: {{cartItem.item.itemCode}}</span>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Price -->
+                    <div class="col-price">
+                        <span class="price-value">{{ cartItem.item.price | number:'1.0-0' }} <span
+                                class="sar-icon"></span></span>
+                    </div>
+
+                    <!-- Column 3: Quantity -->
+                    <div class="col-qty">
+                        <div class="qty-stepper hidden-print">
+                            <button type="button" class="qty-btn" (click)="decrementQty(cartItem)"
+                                [disabled]="cartItem.quantity <= 1">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                            <input type="number" [value]="cartItem.quantity" min="1"
+                                (change)="onQtyChange(cartItem, $any($event.target).valueAsNumber)" class="qty-input"
+                                title="Quantity" placeholder="Qty" [attr.aria-label]="'CART.QUANTITY' | translate" />
+                            <button type="button" class="qty-btn" (click)="incrementQty(cartItem)">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                        <span class="print-qty hidden-screen">{{ cartItem.quantity }}x</span>
+                    </div>
+
+                    <!-- Column 4: Total -->
+                    <div class="col-total">
+                        <span class="total-value">
+                            {{ ((cartItem.item.price + cartItem.item.price * cartItem.item.vatPercentage / 100) *
+                            cartItem.quantity) | number:'1.0-0' }} <span class="sar-icon"></span>
+                        </span>
+                    </div>
+
+                    <!-- Column 5: Action -->
+                    <div class="col-action hidden-print">
+                        <button mat-icon-button color="warn" (click)="removeItem(cartItem)"
+                            [matTooltip]="'CART.REMOVE' | translate">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                }
+            </div>
+            }
+        </mat-card>
+
+        <!-- Right Side Summary -->
+        @if (cartService.itemCount() > 0) {
+        <mat-card class="order-summary-card" appearance="outlined">
+            <h2>{{ 'CART.ORDER_SUMMARY' | translate }}</h2>
+
+            <div class="summary-line text-muted">
+                <span>{{ 'CART.SUBTOTAL' | translate }} ({{cartService.itemCount()}} {{ 'CART.ITEMS_COUNT' | translate
+                    }})</span>
+                <span>{{ cartService.subtotal() | number:'1.0-0' }} <span class="sar-icon"></span></span>
+            </div>
+
+            <div class="summary-line text-muted">
+                <span>{{ 'CART.VAT_AMOUNT' | translate }}</span>
+                <span>{{ cartService.vatAmount() | number:'1.0-0' }} <span class="sar-icon"></span></span>
+            </div>
+
+            <mat-divider class="summary-divider"></mat-divider>
+
+            <div class="summary-line grand-total">
+                <span>{{ 'CART.GRAND_TOTAL' | translate }}</span>
+                <span>{{ cartService.grandTotal() | number:'1.0-0' }} <span class="sar-icon sar-lg"></span></span>
+            </div>
+
+            <div class="checkout-actions hidden-print">
+                <button mat-flat-button color="primary" class="checkout-btn">
+                    {{ 'CART.CHECKOUT' | translate }}
+                </button>
+            </div>
+        </mat-card>
+        }
+    </div>
+</div>

@@ -1,0 +1,180 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-sidenav-container {
+  flex: 1;
+  background-color: var(--color-bg);
+}
+
+// ==========================================
+// LEFT SIDEBAR - PREMIUM COLLAPSIBLE
+// ==========================================
+.main-nav-sidebar {
+  width: v.$sidebar-expanded;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  transition: width v.$transition-smooth;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &.collapsed {
+    width: v.$sidebar-collapsed;
+  }
+
+  .sidebar-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  // Brand Logo Area
+  .sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-2;
+    padding: v.$spacing-3;
+    min-height: 64px;
+    transition: padding v.$transition-normal;
+
+    &.collapsed {
+      justify-content: center;
+      padding: v.$spacing-2;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: v.$radius-btn;
+      background: v.$gradient-primary;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 4px 12px rgba(v.$color-primary, 0.3);
+      
+      mat-icon {
+        font-size: 22px;
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    .brand-text {
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      color: var(--color-text-main);
+      white-space: nowrap;
+      animation: fadeInUp 0.2s ease;
+    }
+  }
+
+  .nav-divider {
+    margin: 8px 16px;
+  }
+
+  // Navigation List
+  .nav-list {
+    padding: v.$spacing-1 v.$spacing-1;
+
+    a.mat-mdc-list-item {
+      border-radius: v.$radius-btn;
+      margin-bottom: 4px;
+      height: 48px;
+      transition: all v.$transition-fast;
+      color: var(--color-text-muted);
+
+      mat-icon {
+        color: var(--color-text-muted);
+        transition: color v.$transition-fast;
+      }
+
+      &:hover {
+        background: var(--color-hover);
+        color: var(--color-text-main);
+
+        mat-icon {
+          color: var(--color-primary);
+        }
+      }
+
+      &.active-link {
+        background: rgba(v.$color-primary, 0.08);
+        color: var(--color-primary);
+        font-weight: 600;
+
+        mat-icon {
+          color: var(--color-primary);
+        }
+
+        // Active indicator bar
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 8px;
+          bottom: 8px;
+          width: 3px;
+          border-radius: 0 3px 3px 0;
+          background: v.$gradient-primary;
+        }
+
+        [dir="rtl"] &::before {
+          left: auto;
+          right: 0;
+          border-radius: 3px 0 0 3px;
+        }
+      }
+    }
+  }
+
+  // Footer with collapse button
+  .sidebar-footer {
+    padding: v.$spacing-1;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    justify-content: center;
+
+    .collapse-toggle-btn {
+      color: var(--color-text-muted);
+      transition: all v.$transition-fast;
+
+      &:hover {
+        color: var(--color-primary);
+        background: rgba(v.$color-primary, 0.08);
+      }
+    }
+  }
+}
+
+// ==========================================
+// MAIN CONTENT AREA
+// ==========================================
+.app-main-content {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+}
+
+.store-container {
+  flex: 1;
+  width: 100%;
+  max-width: v.$max-w-container;
+  margin: 0 auto;
+  padding: v.$spacing-4;
+  
+  @media (max-width: 768px) {
+    padding: v.$spacing-2;
+  }
+}

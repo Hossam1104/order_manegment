@@ -1,0 +1,93 @@
+<div class="cart-drawer">
+    <!-- Header (Sticky) -->
+    <div class="cart-header">
+        <div class="title-wrapper">
+            <mat-icon class="cart-icon">shopping_bag</mat-icon>
+            <h2>Your Cart</h2>
+            @if (cartService.itemCount() > 0) {
+            <span class="badge">{{ cartService.itemCount() }}</span>
+            }
+        </div>
+        <button mat-icon-button (click)="closeCart.emit()" class="close-btn">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <!-- Scrollable Cart Items Area -->
+    <div class="cart-items-list" [@listAnimation]="cartService.cartItems().length">
+        @if (cartService.itemCount() === 0) {
+        <div class="empty-state">
+            <div class="empty-illustration">
+                <mat-icon>shopping_cart</mat-icon>
+            </div>
+            <p>Your cart is empty.</p>
+            <button mat-stroked-button (click)="closeCart.emit()">Continue Shopping</button>
+        </div>
+        } @else {
+        @for (cartItem of cartService.cartItems(); track cartItem.item.id) {
+        <div class="cart-item">
+            <!-- Item Image -->
+            <div class="item-visual">
+                <img [src]="getImageUrl(cartItem) || 'assets/placeholder-image.png'" [alt]="getItemName(cartItem)"
+                    [attr.title]="getItemName(cartItem)">
+            </div>
+
+            <!-- Item Details -->
+            <div class="item-details">
+                <div class="item-header">
+                    <span class="item-name">{{ getItemName(cartItem) }}</span>
+                    <button mat-icon-button class="remove-btn" (click)="removeItem(cartItem)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+                <div class="item-price">{{ cartItem.item.price | currency:'SAR':'symbol':'1.0-0' }}</div>
+
+                <!-- Quantity Controls -->
+                <div class="item-actions">
+                    <div class="qty-stepper">
+                        <button type="button" class="qty-btn" (click)="decrementQty(cartItem)"
+                            [disabled]="cartItem.quantity <= 1">
+                            <mat-icon>remove</mat-icon>
+                        </button>
+                        <input type="number" [value]="cartItem.quantity" min="1"
+                            (change)="onQtyChange(cartItem, $any($event.target).valueAsNumber)" class="qty-input" />
+                        <button type="button" class="qty-btn" (click)="incrementQty(cartItem)">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+
+                    <div class="line-total">
+                        {{ ((cartItem.item.price + cartItem.item.price * cartItem.item.vatPercentage / 100) *
+                        cartItem.quantity) | currency:'SAR':'symbol':'1.0-0' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+        }
+    </div>
+
+    <!-- Footer (Sticky) -->
+    @if (cartService.itemCount() > 0) {
+    <div class="cart-footer">
+        <div class="summary-line text-muted">
+            <span>Subtotal</span>
+            <span>{{ cartService.subtotal() | currency:'SAR':'symbol':'1.0-0' }}</span>
+        </div>
+        <div class="summary-line text-muted">
+            <span>VAT Amount</span>
+            <span>{{ cartService.vatAmount() | currency:'SAR':'symbol':'1.0-0' }}</span>
+        </div>
+        <div class="summary-line grand-total">
+            <span>Total</span>
+            <span>{{ cartService.grandTotal() | currency:'SAR':'symbol':'1.0-0' }}</span>
+        </div>
+
+        <div class="checkout-actions">
+            <button mat-flat-button class="checkout-btn" disabled>
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+    }
+</div>

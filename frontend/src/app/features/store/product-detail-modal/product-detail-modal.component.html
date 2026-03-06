@@ -1,0 +1,48 @@
+<div class="product-modal">
+    <button mat-icon-button class="modal-close" (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="modal-content">
+        <div class="modal-image-col">
+            <img [src]="getImageUrl() || 'assets/placeholder-image.png'" alt="Product image" title="Product image"
+                [attr.alt]="getItemName()" [attr.title]="getItemName()">
+        </div>
+
+        <div class="modal-info-col">
+            <div class="item-code text-muted">{{ data.item.itemCode }}</div>
+            <h2 class="item-title">{{ getItemName() }}</h2>
+
+            <div class="price-section">
+                <span class="price">{{ data.item.price | number:'1.0-0' }} <span class="sar-icon"></span></span>
+                @if (data.item.vatPercentage > 0) {
+                <span class="vat-badge">+ {{ data.item.vatPercentage }}% {{ 'STORE.VAT_INCL' | translate }}</span>
+                }
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="purchase-actions">
+                <label>{{ 'MODAL.QUANTITY' | translate }}</label>
+                <div class="qty-stepper">
+                    <button type="button" class="qty-btn" (click)="decrement()" [disabled]="quantity <= 1">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <div class="qty-display">{{ quantity }}</div>
+                    <button type="button" class="qty-btn" (click)="increment()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+                <button mat-flat-button color="primary" class="add-btn" (click)="addToCart()">
+                    <mat-icon>shopping_cart_checkout</mat-icon>
+                    {{ 'MODAL.ADD_TO_CART' | translate }}
+                </button>
+            </div>
+
+            <div class="shipping-info text-muted">
+                <mat-icon>local_shipping</mat-icon> {{ 'STORE.FREE_SHIPPING' | translate }}
+            </div>
+        </div>
+    </div>
+</div>
