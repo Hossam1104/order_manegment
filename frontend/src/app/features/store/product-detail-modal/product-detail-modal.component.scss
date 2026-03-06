@@ -59,8 +59,15 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12));
       transition: transform v.$transition-smooth;
+      
+      // Magically removes white/off-white JPEG backgrounds
+      mix-blend-mode: multiply;
+
+      // Ensure images are still visible in dark mode
+      @at-root .dark-theme & {
+        mix-blend-mode: normal;
+      }
 
       &:hover {
         transform: scale(1.05);
