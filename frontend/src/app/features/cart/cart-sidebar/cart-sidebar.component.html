@@ -40,7 +40,7 @@
                         <mat-icon>close</mat-icon>
                     </button>
                 </div>
-                <div class="item-price">{{ cartItem.item.price | currency:'SAR':'symbol':'1.0-0' }}</div>
+                <div class="item-price">{{ cartItem.item.price | currency:'SAR':'symbol':'1.2-2' }}</div>
 
                 <!-- Quantity Controls -->
                 <div class="item-actions">
@@ -58,7 +58,7 @@
 
                     <div class="line-total">
                         {{ ((cartItem.item.price + cartItem.item.price * cartItem.item.vatPercentage / 100) *
-                        cartItem.quantity) | currency:'SAR':'symbol':'1.0-0' }}
+                        cartItem.quantity) | currency:'SAR':'symbol':'1.2-2' }}
                     </div>
                 </div>
             </div>
@@ -72,15 +72,15 @@
     <div class="cart-footer">
         <div class="summary-line text-muted">
             <span>Subtotal</span>
-            <span>{{ cartService.subtotal() | currency:'SAR':'symbol':'1.0-0' }}</span>
+            <span>{{ cartService.subtotal() | currency:'SAR':'symbol':'1.2-2' }}</span>
         </div>
         <div class="summary-line text-muted">
             <span>VAT Amount</span>
-            <span>{{ cartService.vatAmount() | currency:'SAR':'symbol':'1.0-0' }}</span>
+            <span>{{ cartService.vatAmount() | currency:'SAR':'symbol':'1.2-2' }}</span>
         </div>
         <div class="summary-line grand-total">
             <span>Total</span>
-            <span>{{ cartService.grandTotal() | currency:'SAR':'symbol':'1.0-0' }}</span>
+            <span>{{ cartService.grandTotal() | currency:'SAR':'symbol':'1.2-2' }}</span>
         </div>
 
         <div class="checkout-actions">

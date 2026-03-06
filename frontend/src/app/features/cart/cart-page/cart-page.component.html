@@ -91,7 +91,7 @@
 
                     <!-- Column 2: Price -->
                     <div class="col-price" data-label="Unit Price">
-                        <span class="price-value">{{ cartItem.item.price | number:'1.0-0' }} <span
+                        <span class="price-value">{{ cartItem.item.price | number:'1.2-2' }} <span
                                 class="sar-icon"></span></span>
                     </div>
 
@@ -116,7 +116,7 @@
                     <div class="col-total" data-label="Total">
                         <span class="total-value">
                             {{ ((cartItem.item.price + cartItem.item.price * cartItem.item.vatPercentage / 100) *
-                            cartItem.quantity) | number:'1.0-0' }} <span class="sar-icon"></span>
+                            cartItem.quantity) | number:'1.2-2' }} <span class="sar-icon"></span>
                         </span>
                     </div>
 
@@ -141,19 +141,19 @@
             <div class="summary-line text-muted">
                 <span>{{ 'CART.SUBTOTAL' | translate }} ({{cartService.itemCount()}} {{ 'CART.ITEMS_COUNT' | translate
                     }})</span>
-                <span>{{ cartService.subtotal() | number:'1.0-0' }} <span class="sar-icon"></span></span>
+                <span>{{ cartService.subtotal() | number:'1.2-2' }} <span class="sar-icon"></span></span>
             </div>
 
             <div class="summary-line text-muted">
                 <span>{{ 'CART.VAT_AMOUNT' | translate }}</span>
-                <span>{{ cartService.vatAmount() | number:'1.0-0' }} <span class="sar-icon"></span></span>
+                <span>{{ cartService.vatAmount() | number:'1.2-2' }} <span class="sar-icon"></span></span>
             </div>
 
             <mat-divider class="summary-divider"></mat-divider>
 
             <div class="summary-line grand-total">
                 <span>{{ 'CART.GRAND_TOTAL' | translate }}</span>
-                <span>{{ cartService.grandTotal() | number:'1.0-0' }} <span class="sar-icon sar-lg"></span></span>
+                <span>{{ cartService.grandTotal() | number:'1.2-2' }} <span class="sar-icon sar-lg"></span></span>
             </div>
 
 

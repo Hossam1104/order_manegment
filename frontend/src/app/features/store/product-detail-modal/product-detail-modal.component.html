@@ -14,7 +14,7 @@
             <h2 class="item-title">{{ getItemName() }}</h2>
 
             <div class="price-section">
-                <span class="price">{{ data.item.price | number:'1.0-0' }} <span class="sar-icon"></span></span>
+                <span class="price">{{ data.item.price | number:'1.2-2' }} <span class="sar-icon"></span></span>
                 @if (data.item.vatPercentage > 0) {
                 <span class="vat-badge">+ {{ data.item.vatPercentage }}% {{ 'STORE.VAT_INCL' | translate }}</span>
                 }
