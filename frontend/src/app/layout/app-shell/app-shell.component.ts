@@ -47,11 +47,11 @@ export class AppShellComponent implements OnInit, OnDestroy {
   cartCount = computed(() => this.cartService.itemCount());
   currentLang = signal(localStorage.getItem('om_lang') || 'en');
   currentDir = computed(() => this.currentLang() === 'ar' ? 'rtl' : 'ltr');
-  
+
   // Sidebar collapse state
   sidebarCollapsed = signal(false);
   isMobile = signal(false);
-  
+
   private destroySub = new Subscription();
 
   constructor() {
