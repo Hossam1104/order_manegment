@@ -78,7 +78,7 @@
     "VAT_AMOUNT": "Total VAT Amount",
     "GRAND_TOTAL": "Estimated Total",
     "CLEAR": "Clear Cart",
-    "PRINT_INVOICE": "Print Invoice (A4)",
+    "PRINT_INVOICE": "Print Invoice",
     "CHECKOUT": "Confirm Order Checkout",
     "ORDER_SUMMARY": "Order Summary",
     "ITEMS_COUNT": "items",

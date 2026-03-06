@@ -2148,6 +2148,7 @@ Move every inline style="" attribute to its component's .scss file.
       height: 48px;
       object-fit: cover;
       border-radius: 4px;
+      background-color: white;
     }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

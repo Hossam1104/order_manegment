@@ -199,10 +199,12 @@ $grid-layout: 2fr 1fr 1fr 1fr 48px;
     gap: v.$spacing-2;
 
     .item-visual {
-      width: 56px; height: 56px;
+      width: 60px; height: 60px;
       border-radius: v.$radius-img;
-      object-fit: cover;
+      object-fit: contain;
+      mix-blend-mode: multiply;
       border: 1px solid var(--color-border);
+      padding: 4px;
     }
 
     .item-meta {
@@ -528,19 +530,29 @@ $grid-layout: 2fr 1fr 1fr 1fr 48px;
     border-radius: 0 !important;
   }
 
+  // Force table header to display as grid (overrides mobile display:none)
   .cart-table-header {
+    display: grid !important;
     grid-template-columns: 3fr 1fr 1fr 1.5fr !important;
-    background: #0A2540 !important; // deeply rich navy for print
+    background: #0A2540 !important;
     color: white !important;
     border: none !important;
     padding: 12px 16px !important;
     font-size: 11px !important;
     font-weight: 700 !important;
     border-radius: 8px 8px 0 0 !important;
+
+    // Hide the action column header in print
+    .col-action {
+      display: none !important;
+    }
   }
 
+  // Force grid layout on rows (overrides mobile flex-direction:column)
   .cart-row {
+    display: grid !important;
     grid-template-columns: 3fr 1fr 1fr 1.5fr !important;
+    flex-direction: row !important;
     padding: 12px 16px !important;
     border-bottom: 1px solid #eee !important;
     page-break-inside: avoid;
@@ -556,6 +568,9 @@ $grid-layout: 2fr 1fr 1fr 1fr 48px;
     }
 
     .col-product {
+      display: flex !important;
+      flex-direction: row !important;
+      
       .item-meta {
         .item-name {
           font-size: 12px;
@@ -570,6 +585,21 @@ $grid-layout: 2fr 1fr 1fr 1fr 48px;
       }
     }
 
+    // Override mobile stacked styles — hide pseudo-element labels in print
+    .col-price,
+    .col-qty,
+    .col-total {
+      display: block !important;
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+      border-top: none !important;
+      
+      &::before {
+        display: none !important;
+        content: none !important;
+      }
+    }
+
     .col-price {
       font-size: 12px;
       color: #333 !important;
@@ -580,6 +610,10 @@ $grid-layout: 2fr 1fr 1fr 1fr 48px;
       font-weight: 700 !important;
       color: #000 !important;
       text-align: right;
+    }
+
+    .col-action {
+      display: none !important;
     }
   }
 
