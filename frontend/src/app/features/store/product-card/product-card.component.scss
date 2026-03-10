@@ -108,7 +108,7 @@
       
       .product-name {
         margin: 0;
-        font-size: 11px;
+        font-size: 13px;
         font-weight: 600;
         color: var(--color-text-main);
         @include m.text-ellipsis;
@@ -130,13 +130,13 @@
     }
     
     .product-price {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 700;
       color: var(--color-primary);
       margin-bottom: 0;
       display: flex;
       align-items: center;
-      gap: 2px;
+      gap: 3px;
       line-height: 1;
       
       .sar-label {

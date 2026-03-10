@@ -33,7 +33,7 @@ $dark-theme: mat.define-theme((
 ));
 
 // Google Fonts - Premium Typography Stack
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Cairo:wght@300;400;600;700&display=swap');
 
 // ==========================================
 // CSS CUSTOM PROPERTIES
@@ -183,9 +183,9 @@ body {
 // ==========================================
 .sar-icon {
   display: inline-block;
-  width: 0.85em;
-  height: 0.85em;
-  vertical-align: -0.05em;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.1em;
   margin-inline-start: 4px;
   background: currentColor;
   -webkit-mask: url('assets/icons/sar-symbol.svg') no-repeat center / contain;
