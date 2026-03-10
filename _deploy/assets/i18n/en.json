@@ -1,0 +1,145 @@
+{
+  "APP_TITLE": "Order Management",
+  "NAV": {
+    "ITEMS": "Items",
+    "CART": "Cart",
+    "CONFIGURATION": "Configuration",
+    "STOREFRONT": "Store",
+    "ALL_ITEMS": "All Items",
+    "SHOPPING_CART": "Shopping Cart",
+    "SETTINGS": "Settings",
+    "TOGGLE_MENU": "Toggle Menu",
+    "COLLAPSE": "Collapse",
+    "EXPAND": "Expand"
+  },
+  "THEME": {
+    "DARK": "Dark Mode",
+    "LIGHT": "Light Mode"
+  },
+  "LANG": {
+    "EN": "EN",
+    "AR": "AR"
+  },
+  "STORE": {
+    "HERO_TITLE": "Supercharge Your Business 🚀",
+    "HERO_SUBTITLE": "Discover smart tools and premium equipment designed to help your store thrive and grow.",
+    "NO_PRODUCTS": "No Products Found",
+    "NO_PRODUCTS_HINT": "Try adjusting your search filters",
+    "ADD_TO_CART": "Add to Cart",
+    "VAT_INCL": "VAT Incl.",
+    "QUICK_VIEW": "Quick View",
+    "FREE_SHIPPING": "Free shipping on orders over 500 SAR"
+  },
+  "ITEMS": {
+    "TITLE": "All Items",
+    "SUBTITLE": "Manage your store inventory, pricing, and stock.",
+    "ADD": "Add Item",
+    "EDIT": "Edit Item",
+    "DELETE": "Delete Item",
+    "DELETE_CONFIRM": "Are you sure you want to delete this item?",
+    "CODE": "Item Code",
+    "NAME_EN": "Name (EN)",
+    "NAME_AR": "Name (AR)",
+    "IMAGE": "Image",
+    "PRICE": "Price",
+    "VAT": "VAT %",
+    "NET_TOTAL": "Net Total",
+    "CREATED": "Created",
+    "ACTIONS": "Actions",
+    "ADD_TO_CART": "Add to Cart",
+    "SEARCH": "Search items...",
+    "EMPTY": "No items found. Add your first item.",
+    "CATEGORY": "Category"
+  },
+  "FORM": {
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "UPLOAD_IMAGE": "Upload Image",
+    "REQUIRED": "This field is required",
+    "MAX_LENGTH": "Maximum {{max}} characters",
+    "MIN_VALUE": "Minimum value is {{min}}",
+    "MAX_VALUE": "Maximum value is {{max}}",
+    "CODE_TAKEN": "This item code is already in use",
+    "IMAGE_TYPE": "Only JPG and PNG files are allowed",
+    "IMAGE_SIZE": "Image must be under 5MB",
+    "CODE_CHECKING": "Checking availability...",
+    "IMAGE_PREVIEW": "Image preview"
+  },
+  "CART": {
+    "TITLE": "Your Shopping Cart",
+    "EMPTY": "Your cart is empty",
+    "EMPTY_HINT": "Looks like you haven't added anything to your cart yet.",
+    "CONTINUE_SHOPPING": "Continue Shopping",
+    "QUANTITY": "Quantity",
+    "UNIT_PRICE": "Unit Price",
+    "LINE_TOTAL": "Line Total",
+    "PRODUCT": "Product Option",
+    "SUBTOTAL": "Subtotal",
+    "VAT_AMOUNT": "Total VAT Amount",
+    "GRAND_TOTAL": "Estimated Total",
+    "CLEAR": "Clear Cart",
+    "PRINT_INVOICE": "Print Invoice",
+    "CHECKOUT": "Confirm Order Checkout",
+    "ORDER_SUMMARY": "Order Summary",
+    "ITEMS_COUNT": "items",
+    "REMOVE": "Remove",
+    "INVOICE_TITLE": "Tax Invoice",
+    "INVOICE_NO": "Invoice No:",
+    "DATE": "Date:",
+    "TAX_ID": "Tax ID:"
+  },
+  "MODAL": {
+    "QUANTITY": "Quantity",
+    "ADD_TO_CART": "Add to Cart"
+  },
+  "CONFIG": {
+    "TITLE": "Configuration",
+    "SUBTITLE": "Manage your database connection and application settings",
+    "DB_SECTION": "Database Connection",
+    "SERVER": "Server",
+    "DATABASE": "Database Name",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "TEST": "Test Connection",
+    "SAVE": "Save",
+    "TEST_SUCCESS": "Connection successful",
+    "TEST_FAIL": "Connection failed",
+    "SEED_SECTION": "Data Seeding Settings",
+    "SEED_ENABLED": "Enable Seed Data",
+    "SEED_CATEGORY": "Product Category",
+    "SEED_COUNT": "Seed Count",
+    "APPEARANCE_SECTION": "Appearance",
+    "DARK_MODE": "Dark Mode",
+    "LIGHT_MODE": "Light Mode",
+    "LANG_EN": "English",
+    "LANG_AR": "العربية (Arabic)"
+  },
+  "ERRORS": {
+    "LOAD": "Failed to load data",
+    "SAVE": "Failed to save",
+    "DELETE": "Failed to delete",
+    "UPLOAD": "Failed to upload image"
+  },
+  "BULK_UPLOAD": {
+    "TITLE": "Bulk Upload",
+    "STEP1": "Step 1: Download Template",
+    "STEP1_DESC": "Download the Excel template and fill it with your item data.",
+    "STEP2": "Step 2: Upload File",
+    "STEP2_DESC": "Upload the filled Excel file to create items in bulk.",
+    "DOWNLOAD_TEMPLATE": "Download Template",
+    "SELECT_FILE": "Click to select an Excel file",
+    "FILE_HINT": "Only .xlsx files up to 5MB are accepted",
+    "UPLOAD": "Upload Items",
+    "SUCCESS": "{{count}} items created successfully!",
+    "ERRORS_FOUND": "Validation Errors Found",
+    "INVALID_FORMAT": "Only .xlsx files are allowed",
+    "FILE_TOO_LARGE": "File size must be under 5MB"
+  },
+  "CONFIRM": {
+    "YES": "Yes",
+    "NO": "No"
+  },
+  "CURRENCY": {
+    "SAR": "SAR"
+  }
+}
