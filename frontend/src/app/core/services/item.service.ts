@@ -27,7 +27,7 @@ export class ItemService {
                     success: true,
                     data: {
                         items: (result.items || []).map((r: any) => this.mapRow(r)),
-                        totalCount: result.totalcount ?? 0,
+                        totalCount: result.totalCount ?? 0,
                         page: result.page ?? page,
                         size: result.size ?? size
                     },
