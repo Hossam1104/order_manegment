@@ -191,14 +191,12 @@
   object-fit: contain;
   mix-blend-mode: multiply;
   border-radius: v.$radius-img;
-  background: var(--color-hover);
   border: 1px solid var(--color-border);
   padding: 4px;
-  background-color: white;
+  background-color: #fff;
 
   @at-root .dark-theme & {
     mix-blend-mode: normal;
-    background-color: var(--color-surface);
   }
 }
 
