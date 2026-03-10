@@ -48,7 +48,7 @@
       // Makes solid JPEG backgrounds dynamically transparent
       mix-blend-mode: multiply;
 
-      @at-root .dark-theme & {
+      :host-context(.dark-theme) & {
         mix-blend-mode: normal;
       }
     }

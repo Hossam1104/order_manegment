@@ -65,7 +65,7 @@
       mix-blend-mode: multiply;
 
       // Ensure images are still visible in dark mode
-      @at-root .dark-theme & {
+      :host-context(.dark-theme) & {
         mix-blend-mode: normal;
       }
 
