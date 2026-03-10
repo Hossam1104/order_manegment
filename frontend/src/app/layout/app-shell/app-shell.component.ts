@@ -1,6 +1,6 @@
-import { Component, computed, signal, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, computed, signal, inject, OnInit, OnDestroy, NgZone, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { RouterOutlet, NavigationEnd, Router } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenavModule, MatSidenavContent } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -37,12 +37,15 @@ import { ThemeService } from '../../core/services/theme.service';
   templateUrl: './app-shell.component.html',
   styleUrl: './app-shell.component.scss'
 })
-export class AppShellComponent implements OnInit, OnDestroy {
+export class AppShellComponent implements OnInit, OnDestroy, AfterViewInit {
   translate = inject(TranslateService);
   cartService = inject(CartService);
   breakpointObserver = inject(BreakpointObserver);
   router = inject(Router);
   private themeService = inject(ThemeService);
+  private ngZone = inject(NgZone);
+
+  @ViewChild(MatSidenavContent) sidenavContent!: MatSidenavContent;
 
   cartCount = computed(() => this.cartService.itemCount());
   currentLang = signal(localStorage.getItem('om_lang') || 'en');
@@ -51,8 +54,16 @@ export class AppShellComponent implements OnInit, OnDestroy {
   // Sidebar collapse state
   sidebarCollapsed = signal(false);
   isMobile = signal(false);
+  showScrollTop = signal(false);
 
   private destroySub = new Subscription();
+  private scrollHandler = () => {
+    const scrollTop = this.sidenavContent?.getElementRef().nativeElement.scrollTop ?? 0;
+    const visible = scrollTop > 300;
+    if (this.showScrollTop() !== visible) {
+      this.ngZone.run(() => this.showScrollTop.set(visible));
+    }
+  };
 
   constructor() {
     // Restore stored language on startup
@@ -93,8 +104,23 @@ export class AppShellComponent implements OnInit, OnDestroy {
     this.destroySub.add(routeSub);
   }
 
+  ngAfterViewInit(): void {
+    const el = this.sidenavContent?.getElementRef().nativeElement;
+    if (el) {
+      this.ngZone.runOutsideAngular(() => {
+        el.addEventListener('scroll', this.scrollHandler, { passive: true });
+      });
+    }
+  }
+
   ngOnDestroy(): void {
     this.destroySub.unsubscribe();
+    const el = this.sidenavContent?.getElementRef().nativeElement;
+    el?.removeEventListener('scroll', this.scrollHandler);
+  }
+
+  scrollToTop(): void {
+    this.sidenavContent?.getElementRef().nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   toggleSidebar(): void {

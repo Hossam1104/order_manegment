@@ -27,8 +27,7 @@ export class ProductGridComponent implements OnInit {
 
   loadProducts(): void {
     this.loading.set(true);
-    // Fetching page 1, size 50 as a storefront default until infinite scroll is added
-    this.itemService.getItems(1, 50).subscribe({
+    this.itemService.getItems(1, 10000).subscribe({
       next: (response) => {
         if (response.success && response.data) {
           this.items.set(response.data.items);

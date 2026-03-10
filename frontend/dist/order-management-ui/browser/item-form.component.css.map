@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/items/item-form/item-form.component.scss"],
+  "sourcesContent": [".item-form {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 4px;\r\n  padding-top: 8px;\r\n  min-width: 480px;\r\n}\r\n\r\n.full-width {\r\n  width: 100%;\r\n}\r\n\r\n.form-row {\r\n  display: flex;\r\n  gap: 16px;\r\n\r\n  mat-form-field {\r\n    flex: 1;\r\n  }\r\n}\r\n\r\n.image-upload-section {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 16px;\r\n  margin: 8px 0;\r\n\r\n  .image-preview {\r\n    border: 2px dashed rgba(0, 0, 0, 0.12);\r\n    border-radius: 8px;\r\n    padding: 4px;\r\n  }\r\n\r\n  .image-error {\r\n    font-size: 12px;\r\n  }\r\n}\r\n\r\n.img-preview {\r\n  max-width: 200px;\r\n  max-height: 150px;\r\n  object-fit: contain;\r\n  border: 1px solid var(--mat-divider-color);\r\n  border-radius: 4px;\r\n  margin-top: 8px;\r\n}\r\n"],
+  "mappings": ";AAAA,CAAA;AACE,WAAA;AACA,kBAAA;AACA,OAAA;AACA,eAAA;AACA,aAAA;;AAGF,CAAA;AACE,SAAA;;AAGF,CAAA;AACE,WAAA;AACA,OAAA;;AAEA,CAJF,SAIE;AACE,QAAA;;AAIJ,CAAA;AACE,WAAA;AACA,eAAA;AACA,OAAA;AACA,UAAA,IAAA;;AAEA,CANF,qBAME,CAAA;AACE,UAAA,IAAA,OAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA;AACA,iBAAA;AACA,WAAA;;AAGF,CAZF,qBAYE,CAAA;AACE,aAAA;;AAIJ,CAAA;AACE,aAAA;AACA,cAAA;AACA,cAAA;AACA,UAAA,IAAA,MAAA,IAAA;AACA,iBAAA;AACA,cAAA;;",
+  "names": []
+}

@@ -79,6 +79,13 @@
         <div class="store-container page-enter">
             <router-outlet></router-outlet>
         </div>
+
+        <!-- Scroll to Top Button -->
+        @if (showScrollTop()) {
+        <button class="scroll-to-top" (click)="scrollToTop()" aria-label="Scroll to top">
+            <mat-icon>keyboard_arrow_up</mat-icon>
+        </button>
+        }
     </mat-sidenav-content>
 
 </mat-sidenav-container>
