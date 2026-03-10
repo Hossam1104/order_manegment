@@ -109,7 +109,13 @@
       background: var(--color-hover);
       overflow: hidden;
 
-      img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+      img {
+        width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply;
+
+        @at-root .dark-theme & {
+          mix-blend-mode: normal;
+        }
+      }
     }
 
   .item-details {

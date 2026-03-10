@@ -196,6 +196,10 @@
   padding: 4px;
   background-color: white;
 
+  @at-root .dark-theme & {
+    mix-blend-mode: normal;
+    background-color: var(--color-surface);
+  }
 }
 
 .code-badge {
