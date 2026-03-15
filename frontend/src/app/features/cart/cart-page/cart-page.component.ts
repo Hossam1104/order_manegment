@@ -10,7 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 
 import { CartService, CartItem } from '../../../core/services/cart.service';
 import { ItemService } from '../../../core/services/item.service';
@@ -39,6 +39,11 @@ import { UIAnimations } from '../../../shared/animations/ui.animations';
 export class CartPageComponent {
     cartService = inject(CartService);
     private itemService = inject(ItemService);
+    private router = inject(Router);
+
+    get shopPath(): string {
+        return this.router.url.startsWith('/shop') ? '/shop' : '/';
+    }
     private dialog = inject(MatDialog);
     private snackBar = inject(MatSnackBar);
     private translate = inject(TranslateService);

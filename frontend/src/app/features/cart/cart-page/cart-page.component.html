@@ -26,7 +26,8 @@
     <!-- Page Header (Screen only) -->
     <div class="page-header hidden-print">
         <div class="title-wrapper">
-            <button mat-icon-button routerLink="/" [matTooltip]="'NAV.STOREFRONT' | translate" class="back-btn">
+            <button mat-icon-button [routerLink]="shopPath" [matTooltip]="'NAV.STOREFRONT' | translate"
+                class="back-btn">
                 <mat-icon>arrow_back</mat-icon>
             </button>
             <div class="page-icon">
@@ -62,7 +63,7 @@
                 </div>
                 <h2>{{ 'CART.EMPTY' | translate }}</h2>
                 <p class="text-muted">{{ 'CART.EMPTY_HINT' | translate }}</p>
-                <button mat-stroked-button routerLink="/">{{ 'CART.CONTINUE_SHOPPING' | translate }}</button>
+                <button mat-stroked-button [routerLink]="shopPath">{{ 'CART.CONTINUE_SHOPPING' | translate }}</button>
             </div>
             } @else {
 

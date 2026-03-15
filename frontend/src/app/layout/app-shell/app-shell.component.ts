@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 import { TopNavbarComponent } from '../top-navbar/top-navbar.component';
 import { CartService } from '../../core/services/cart.service';
 import { ThemeService } from '../../core/services/theme.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-app-shell',
@@ -43,6 +44,7 @@ export class AppShellComponent implements OnInit, OnDestroy, AfterViewInit {
   breakpointObserver = inject(BreakpointObserver);
   router = inject(Router);
   private themeService = inject(ThemeService);
+  private authService = inject(AuthService);
   private ngZone = inject(NgZone);
 
   @ViewChild(MatSidenavContent) sidenavContent!: MatSidenavContent;
@@ -125,5 +127,10 @@ export class AppShellComponent implements OnInit, OnDestroy, AfterViewInit {
 
   toggleSidebar(): void {
     this.sidebarCollapsed.set(!this.sidebarCollapsed());
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

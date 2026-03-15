@@ -3028,3 +3028,331 @@ Every price display in the application (Product Cards, Modal, Cart Page, Printed
 Ensure that any changes you make to the UI strictly maintain this <span class="sar-icon"></span> structure. Do not remove the 
 assets/icons/sar-symbol.svg
  file.
+
+ 
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+
+
+# order_management — Customer Store URL (Phase 2: Dual-URL Architecture)
+
+**Type:** Frontend-only feature addition
+**Scope:** Angular 18 frontend only — no backend changes required
+**Goal:** Add a second URL prefix `/shop` for customers. Customers can browse the store and manage their cart but cannot reach any admin page. The existing `/`, `/admin`, and `/admin/configuration` routes remain unchanged for admins.
+
+---
+
+## CONTEXT — CURRENT ROUTING STATE
+
+The current `app.routes.ts` is:
+
+  const routes: Routes = [
+    { path: '',                 component: ProductGridComponent }        ← admin can also see store here
+    { path: 'admin',            component: ItemListComponent }          ← admin: manage items
+    { path: 'admin/configuration', component: ConfigPanelComponent }    ← admin: settings
+    { path: 'cart',             component: CartPageComponent }          ← shared cart page
+    { path: '**',               redirectTo: '' }
+  ];
+
+The current `AppShellComponent` (layout/app-shell/) wraps everything and shows a sidebar with four links:
+  - Store (/)
+  - All Items (/admin)
+  - Shopping Cart (/cart)
+  - Settings (/admin/configuration)
+
+PROBLEM: A customer navigating to the app has no dedicated URL. If they land on `/` they see the store, but nothing prevents them from typing `/admin` manually. Also the sidebar shows admin links they should not have.
+
+---
+
+## TASK: IMPLEMENT DUAL-URL ARCHITECTURE
+
+Add a `/shop` URL prefix that gives customers a locked-down shell showing only Store and Cart.
+The admin layout and routes stay exactly as they are — DO NOT touch any existing route or component.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1 — CREATE CustomerShellComponent
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Create three files:
+  frontend/src/app/layout/customer-shell/customer-shell.component.ts
+  frontend/src/app/layout/customer-shell/customer-shell.component.html
+  frontend/src/app/layout/customer-shell/customer-shell.component.scss
+
+This component is a simplified copy of AppShellComponent with these strict differences:
+  - Sidebar shows ONLY two nav links: Store (/shop) and Shopping Cart (/shop/cart)
+  - NO link to /admin, /admin/configuration, or any settings page
+  - Import and use TopNavbarComponent (reuse the existing one — do not create a new one)
+  - Import and use CartService (reuse from core/services/cart.service)
+  - All signals, breakpoint handling, scroll-to-top, and sidebar collapse logic are identical to AppShellComponent
+  - Uses RouterOutlet to render child routes
+
+customer-shell.component.ts — key structure:
+
+  @Component({
+    selector: 'app-customer-shell',
+    standalone: true,
+    imports: [
+      RouterOutlet, RouterLink, RouterLinkActive,
+      MatSidenavModule, MatListModule, MatIconModule,
+      MatBadgeModule, MatButtonModule, MatTooltipModule,
+      TranslateModule, MatDividerModule, TopNavbarComponent
+    ],
+    templateUrl: './customer-shell.component.html',
+    styleUrl: './customer-shell.component.scss'
+  })
+  export class CustomerShellComponent implements OnInit, OnDestroy, AfterViewInit {
+    // identical signals and logic to AppShellComponent
+    // cartCount, currentLang, currentDir, sidebarCollapsed, isMobile, showScrollTop
+  }
+
+customer-shell.component.html — sidebar nav section must contain ONLY these two items:
+
+  <a mat-list-item routerLink="/shop" routerLinkActive="active-link"
+     [routerLinkActiveOptions]="{exact: true}"
+     [matTooltip]="sidebarCollapsed() ? ('NAV.STOREFRONT' | translate) : ''" matTooltipPosition="after">
+    <mat-icon matListItemIcon>store</mat-icon>
+    @if (!sidebarCollapsed()) {
+      <div matListItemTitle>{{ 'NAV.STOREFRONT' | translate }}</div>
+    }
+  </a>
+
+  <a mat-list-item routerLink="/shop/cart" routerLinkActive="active-link"
+     [matTooltip]="sidebarCollapsed() ? ('NAV.SHOPPING_CART' | translate) : ''" matTooltipPosition="after">
+    <mat-icon matListItemIcon [matBadge]="cartCount()" [matBadgeHidden]="cartCount() === 0"
+        matBadgeColor="warn" matBadgeSize="small">shopping_cart</mat-icon>
+    @if (!sidebarCollapsed()) {
+      <div matListItemTitle>{{ 'NAV.SHOPPING_CART' | translate }}</div>
+    }
+  </a>
+
+  ← NO admin link. NO settings link. NO divider leading to admin section.
+
+customer-shell.component.scss:
+  Copy the full content of app-shell.component.scss verbatim.
+  No changes needed — exact same styles apply.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 2 — CREATE adminGuard
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Create file: frontend/src/app/core/guards/admin.guard.ts
+
+  import { CanActivateFn, Router } from '@angular/router';
+  import { inject } from '@angular/core';
+
+  export const adminGuard: CanActivateFn = () => {
+    const router = inject(Router);
+    router.navigate(['/shop']);
+    return false;
+  };
+
+This guard unconditionally blocks access to admin routes and redirects to /shop.
+(There is no authentication system in this project — the guard acts as a URL firewall.
+Admins must navigate to /admin directly by knowing the URL; customers who accidentally
+type /admin are bounced back to /shop.)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 3 — UPDATE app.routes.ts
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Replace the entire content of frontend/src/app/app.routes.ts with:
+
+  import { Routes } from '@angular/router';
+  import { adminGuard } from './core/guards/admin.guard';
+
+  export const routes: Routes = [
+    // ── ADMIN ROUTES (existing — do not change these components) ──
+    {
+      path: '',
+      loadComponent: () => import('./layout/app-shell/app-shell.component')
+        .then(m => m.AppShellComponent),
+      children: [
+        {
+          path: '',
+          loadComponent: () => import('./features/store/product-grid/product-grid.component')
+            .then(m => m.ProductGridComponent)
+        },
+        {
+          path: 'admin',
+          loadComponent: () => import('./features/items/item-list/item-list.component')
+            .then(m => m.ItemListComponent)
+        },
+        {
+          path: 'admin/configuration',
+          loadComponent: () => import('./features/configuration/config-panel/config-panel.component')
+            .then(m => m.ConfigPanelComponent)
+        },
+        {
+          path: 'cart',
+          loadComponent: () => import('./features/cart/cart-page/cart-page.component')
+            .then(m => m.CartPageComponent)
+        }
+      ]
+    },
+
+    // ── CUSTOMER ROUTES (new) ──
+    {
+      path: 'shop',
+      loadComponent: () => import('./layout/customer-shell/customer-shell.component')
+        .then(m => m.CustomerShellComponent),
+      children: [
+        {
+          path: '',
+          loadComponent: () => import('./features/store/product-grid/product-grid.component')
+            .then(m => m.ProductGridComponent)
+        },
+        {
+          path: 'cart',
+          loadComponent: () => import('./features/cart/cart-page/cart-page.component')
+            .then(m => m.CartPageComponent)
+        },
+        // Block any attempt to reach admin sub-paths under /shop
+        {
+          path: '**',
+          redirectTo: ''
+        }
+      ]
+    },
+
+    // ── GUARD ADMIN ROUTES FROM DIRECT CUSTOMER NAVIGATION ──
+    // (Admins know their URL; this guard bounces uninvited visitors)
+    { path: 'admin', canActivate: [adminGuard], loadComponent: () => import('./features/items/item-list/item-list.component').then(m => m.ItemListComponent) },
+    { path: 'admin/configuration', canActivate: [adminGuard], loadComponent: () => import('./features/configuration/config-panel/config-panel.component').then(m => m.ConfigPanelComponent) },
+
+    { path: '**', redirectTo: 'shop' }
+  ];
+
+IMPORTANT NOTE on route structure:
+  The admin shell remains the parent for /, /admin, /admin/configuration, /cart routes.
+  The customer shell is the parent for /shop, /shop/cart routes.
+  Both share the same CartService signal — cart state is preserved across both layouts.
+  The wildcard `**` now redirects to /shop instead of '' so lost visitors land on the store.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 4 — UPDATE CART LINKS INSIDE ProductGridComponent
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open frontend/src/app/features/store/product-grid/product-grid.component.ts
+
+Inject ActivatedRoute or Router to detect whether the current URL prefix is /shop or /.
+Add a computed signal that returns the correct cart path:
+
+  private router = inject(Router);
+
+  cartPath = computed(() =>
+    this.router.url.startsWith('/shop') ? '/shop/cart' : '/cart'
+  );
+
+In product-grid.component.html: replace any hardcoded routerLink="/cart" with:
+  [routerLink]="cartPath()"
+
+This ensures the "Go to cart" / "View cart" button inside the store page routes customers
+to /shop/cart (not /cart which uses the admin shell layout).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 5 — UPDATE CART PAGE BACK-NAVIGATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open frontend/src/app/features/cart/cart-page/cart-page.component.ts
+
+Inject Router and compute the correct "Continue Shopping" back-link:
+
+  private router = inject(Router);
+
+  shopPath = computed(() =>
+    this.router.url.startsWith('/shop') ? '/shop' : '/'
+  );
+
+In cart-page.component.html: replace any hardcoded routerLink="/" or [routerLink]="'/'"
+on the "Continue Shopping" button with:
+  [routerLink]="shopPath()"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 6 — PRODUCT DETAIL MODAL: FIX CART NAVIGATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open frontend/src/app/features/store/product-detail-modal/product-detail-modal.component.ts
+
+If the modal has a "Go to cart" button or any router.navigate(['/cart']) call:
+  Replace with route-aware navigation:
+
+  private router = inject(Router);
+
+  goToCart(): void {
+    const isShop = this.router.url.startsWith('/shop');
+    this.router.navigate([isShop ? '/shop/cart' : '/cart']);
+  }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 7 — TRANSLATION KEYS (NO NEW KEYS REQUIRED)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The CustomerShellComponent reuses all existing translation keys from the AppShellComponent:
+  NAV.STOREFRONT
+  NAV.SHOPPING_CART
+  NAV.TOGGLE_MENU
+  NAV.EXPAND
+  NAV.COLLAPSE
+  APP_TITLE
+
+No new keys need to be added to en.json or ar.json.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 8 — DO NOT TOUCH (EXPLICIT SCOPE BOUNDARY)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The following files must NOT be modified in any way:
+
+  backend/ — all .cs files, appsettings.json, Program.cs (no backend changes)
+  frontend/src/app/features/items/ — all item management components
+  frontend/src/app/features/configuration/ — config panel
+  frontend/src/app/layout/app-shell/ — existing admin shell
+  frontend/src/app/layout/top-navbar/ — reused as-is
+  frontend/src/app/core/services/ — all services unchanged
+  frontend/src/app/core/interceptors/ — unchanged
+  frontend/src/assets/i18n/en.json — no new keys needed
+  frontend/src/assets/i18n/ar.json — no new keys needed
+
+Do NOT add authentication, login pages, role-based guards requiring auth state,
+session storage, or any form of user account system. This is URL-separation only.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VERIFICATION CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+□ ng build completes with 0 errors, 0 warnings
+□ Navigate to http://localhost:4200/shop — sees ProductGrid inside CustomerShellComponent
+  ↳ Sidebar shows ONLY "Store" and "Shopping Cart" links — no admin, no settings
+□ Navigate to http://localhost:4200/shop/cart — sees CartPage inside CustomerShellComponent
+  ↳ "Continue Shopping" button routes back to /shop (not /)
+□ Navigate to http://localhost:4200/ — sees ProductGrid inside AppShellComponent (unchanged)
+  ↳ Sidebar shows all four links: Store, All Items, Cart, Settings
+□ Navigate to http://localhost:4200/admin — sees ItemListComponent inside AppShellComponent
+□ Navigate to http://localhost:4200/admin/configuration — sees ConfigPanelComponent
+□ From /shop, type /admin directly in browser — redirected to /shop
+□ Add item to cart at /shop — cart badge increments; navigate to /shop/cart — item appears
+□ Add item to cart at / — cart badge increments; navigate to /cart — same cart state shown
+  ↳ Both paths share the same CartService signal — cart is NOT duplicated
+□ Theme toggle and language toggle work identically in both shells
+□ Responsive collapse behavior works in CustomerShellComponent (same as AppShellComponent)
+□ Scroll-to-top button appears in CustomerShellComponent when scrolled > 300px
+
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+

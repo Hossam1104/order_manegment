@@ -1,0 +1,40 @@
+<div class="login-wrapper">
+    <mat-card class="login-card">
+        <div class="login-header">
+            <div class="login-icon">
+                <mat-icon>admin_panel_settings</mat-icon>
+            </div>
+            <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
+            <p>{{ 'LOGIN.SUBTITLE' | translate }}</p>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" class="login-form">
+            @if (error()) {
+            <div class="error-banner">
+                <mat-icon>error_outline</mat-icon>
+                <span>{{ 'LOGIN.ERROR' | translate }}</span>
+            </div>
+            }
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>{{ 'LOGIN.USERNAME' | translate }}</mat-label>
+                <input matInput [(ngModel)]="username" name="username" required autocomplete="username" />
+                <mat-icon matPrefix>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>{{ 'LOGIN.PASSWORD' | translate }}</mat-label>
+                <input matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password" name="password"
+                    required autocomplete="current-password" />
+                <mat-icon matPrefix>lock</mat-icon>
+                <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+                    <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <button mat-flat-button color="primary" type="submit" class="login-btn" [disabled]="!username || !password">
+                {{ 'LOGIN.SUBMIT' | translate }}
+            </button>
+        </form>
+    </mat-card>
+</div>

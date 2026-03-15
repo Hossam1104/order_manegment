@@ -60,6 +60,14 @@
                     }
                 </a>
 
+                <a mat-list-item (click)="logout()" class="logout-link"
+                    [matTooltip]="sidebarCollapsed() ? ('LOGIN.LOGOUT' | translate) : ''" matTooltipPosition="after">
+                    <mat-icon matListItemIcon>logout</mat-icon>
+                    @if (!sidebarCollapsed()) {
+                    <div matListItemTitle>{{ 'LOGIN.LOGOUT' | translate }}</div>
+                    }
+                </a>
+
             </mat-nav-list>
         </div>
 
