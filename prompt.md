@@ -3356,3 +3356,147 @@ VERIFICATION CHECKLIST
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
 
+You are a senior software engineer performing a safe, surgical codebase cleanup.
+
+Your mission: Remove all unused files, folders, imports, variables, functions, routes, 
+components, and dead code — WITHOUT altering any working logic, breaking any feature, 
+or introducing any bugs.
+
+═══════════════════════════════════════════════════════
+PHASE 0 — ORIENTATION (DO THIS FIRST, OUTPUT BEFORE TOUCHING ANYTHING)
+═══════════════════════════════════════════════════════
+
+Before making any changes, produce a structured audit report:
+
+1. List every file and folder you intend to DELETE — with the reason why each is dead.
+2. List every import/variable/function/route you intend to REMOVE — with the file path 
+   and line number.
+3. Flag any file/symbol that LOOKS unused but requires human confirmation before removal 
+   (e.g., dynamically referenced via string, reflection, or runtime injection).
+4. State clearly: "I will NOT touch [X]" for anything that is outside cleanup scope.
+
+Do NOT make any edits until the audit report is reviewed.
+
+═══════════════════════════════════════════════════════
+PHASE 1 — FILE & FOLDER CLEANUP
+═══════════════════════════════════════════════════════
+
+DELETE the following categories — only if confirmed unused:
+
+✅ Files never imported or referenced anywhere in the project
+✅ Duplicate files (e.g., component.old.ts, backup_page.dart, copy_of_x.js)
+✅ Scaffolding/boilerplate left from project generation (unused demo files, 
+   placeholder pages, sample data files)
+✅ Test files with no tests (empty describe/it blocks only)
+✅ Config files for tools not present in package.json / pubspec.yaml / requirements.txt
+✅ Empty folders (no files inside, or only containing .gitkeep with no purpose)
+✅ Generated files that are re-generated on build (do NOT delete build outputs 
+   unless they are committed to source control incorrectly)
+
+❌ DO NOT delete:
+- Any file referenced via a string path (dynamic import, route config, environment 
+  variable, CMS key, etc.)
+- Any file that is a type declaration or interface only (even if no direct import 
+  appears — check barrel exports)
+- Any migration file (database schema history must be preserved)
+- Any file whose name matches a pattern used in glob imports
+
+═══════════════════════════════════════════════════════
+PHASE 2 — DEAD CODE REMOVAL INSIDE FILES
+═══════════════════════════════════════════════════════
+
+Within each remaining file, remove:
+
+✅ Unused imports (verify with static analysis — do NOT assume)
+✅ Declared but never-called functions (check for indirect calls, callbacks, 
+   and event listeners before removing)
+✅ Declared but never-read variables and constants
+✅ Commented-out code blocks that are not TODO/FIXME notes
+✅ console.log / print / debugPrint / logger.debug lines left from development 
+   (ONLY if there is no logging framework collecting them — if there is, leave them)
+✅ Unreachable code after return/throw/break statements
+✅ Duplicate logic that was superseded by a refactor (confirm by reading both blocks)
+✅ Dead feature flags whose condition is always false or always true and will 
+   never change
+✅ Empty catch blocks, empty else blocks, no-op callbacks
+✅ TODO comments older than the last major release that reference removed features
+
+❌ DO NOT remove:
+- Any code block preceded by a comment explaining WHY it exists (even if it looks 
+  unused — it may be intentional)
+- Any export that could be consumed by an external package or host app
+- Any type/interface declaration (TypeScript, Dart, etc.) even if no direct usage 
+  is found in this repo — it may be a public API contract
+- Any polyfill or compatibility shim
+
+═══════════════════════════════════════════════════════
+PHASE 3 — DEPENDENCY AUDIT (REPORT ONLY — DO NOT AUTO-REMOVE)
+═══════════════════════════════════════════════════════
+
+Scan package.json / pubspec.yaml / requirements.txt and report:
+
+- Packages listed as dependencies but with zero imports found in the codebase
+- Packages listed in both dependencies and devDependencies (duplicate)
+- Packages with known deprecated versions (flag, do not upgrade automatically)
+
+Output this as a table:
+
+| Package | Status | Recommendation |
+|---------|--------|----------------|
+| example-lib | Zero imports found | Candidate for removal — verify before deleting |
+
+DO NOT remove any package without explicit confirmation. Package removal can break 
+peer dependencies or runtime behavior not visible in static analysis.
+
+═══════════════════════════════════════════════════════
+PHASE 4 — VERIFICATION CHECKLIST (RUN AFTER EVERY CHANGE)
+═══════════════════════════════════════════════════════
+
+After each file or section of changes, confirm:
+
+[ ] Project still compiles / builds without errors
+[ ] All imports resolve — no "Cannot find module" or "Undefined identifier" errors
+[ ] No circular dependency introduced by removing a re-export
+[ ] Test suite still passes (run: [insert project test command])
+[ ] Linter reports zero new errors introduced by cleanup
+[ ] Git diff reviewed — no logic-affecting lines removed accidentally
+[ ] No route or navigation reference is now pointing to a deleted file
+
+═══════════════════════════════════════════════════════
+PHASE 5 — OUTPUT FORMAT
+═══════════════════════════════════════════════════════
+
+Deliver the cleanup in this structure:
+
+1. AUDIT REPORT (Phase 0 output) — before changes
+2. CHANGES MADE — grouped by:
+   a. Files/Folders Deleted (with justification per item)
+   b. Dead Code Removed (with file path + line numbers)
+   c. Kept but Flagged (items that need human review)
+3. DEPENDENCY REPORT TABLE (Phase 3)
+4. POST-CLEANUP VERIFICATION STATUS — pass/fail per checklist item
+
+═══════════════════════════════════════════════════════
+HARD CONSTRAINTS — NON-NEGOTIABLE
+═══════════════════════════════════════════════════════
+
+🚫 Never rewrite logic to "improve" it — this is cleanup only
+🚫 Never rename files, variables, or functions — out of scope
+🚫 Never change code formatting or style — use a separate formatter run
+🚫 Never remove a file just because it "looks old" — only remove if confirmed dead
+🚫 Never touch migration files, seed files, or schema history
+🚫 If uncertain about any single item — FLAG IT, do not delete it
+
+Cleanup that introduces a bug is worse than no cleanup at all.
+When in doubt, preserve and report.
+
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
