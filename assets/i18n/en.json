@@ -141,5 +141,14 @@
   },
   "CURRENCY": {
     "SAR": "SAR"
+  },
+  "LOGIN": {
+    "TITLE": "Admin Login",
+    "SUBTITLE": "Enter your credentials to access the admin panel",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "SUBMIT": "Sign In",
+    "ERROR": "Invalid username or password",
+    "LOGOUT": "Logout"
   }
 }
