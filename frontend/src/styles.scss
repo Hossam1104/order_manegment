@@ -9,28 +9,20 @@
 @include mat.core();
 
 // Light theme
-$light-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary: mat.$violet-palette,
-    tertiary: mat.$cyan-palette,
-  ),
-  density: (
-    scale: 0,
-  )
-));
+$light-theme: mat.define-theme((color: (theme-type: light,
+        primary: mat.$violet-palette,
+        tertiary: mat.$cyan-palette,
+      ),
+      density: (scale: 0,
+      )));
 
 // Dark theme
-$dark-theme: mat.define-theme((
-  color: (
-    theme-type: dark,
-    primary: mat.$violet-palette,
-    tertiary: mat.$cyan-palette,
-  ),
-  density: (
-    scale: 0,
-  )
-));
+$dark-theme: mat.define-theme((color: (theme-type: dark,
+        primary: mat.$violet-palette,
+        tertiary: mat.$cyan-palette,
+      ),
+      density: (scale: 0,
+      )));
 
 // Google Fonts - Premium Typography Stack
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Cairo:wght@300;400;600;700&display=swap');
@@ -80,11 +72,14 @@ $dark-theme: mat.define-theme((
 // ==========================================
 // GLOBAL RESETS & BASE
 // ==========================================
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -127,6 +122,7 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--color-border);
   border-radius: 4px;
+
   &:hover {
     background: var(--color-text-muted);
   }
@@ -139,7 +135,7 @@ body {
   max-width: v.$max-w-container;
   margin: 0 auto;
   padding: v.$spacing-4;
-  
+
   @media (max-width: 768px) {
     padding: v.$spacing-2;
     overflow-x: hidden;
@@ -153,7 +149,10 @@ body {
 // ==========================================
 // GLOBAL BUTTON ENHANCEMENTS
 // ==========================================
-.mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-flat-button, .mat-mdc-outlined-button {
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-outlined-button {
   @include m.modern-button;
 }
 
@@ -162,7 +161,7 @@ body {
 .mat-mdc-raised-button.mat-primary {
   background: v.$gradient-primary !important;
   border: none;
-  
+
   &:hover {
     box-shadow: 0 8px 25px rgba(v.$color-primary, 0.35);
   }
@@ -191,9 +190,20 @@ body {
   -webkit-mask: url('assets/icons/sar-symbol.svg') no-repeat center / contain;
   mask: url('assets/icons/sar-symbol.svg') no-repeat center / contain;
 
-  &.sar-sm { width: 14px; height: 14px; }
-  &.sar-md { width: 18px; height: 18px; }
-  &.sar-lg { width: 24px; height: 24px; }
+  &.sar-sm {
+    width: 14px;
+    height: 14px;
+  }
+
+  &.sar-md {
+    width: 18px;
+    height: 18px;
+  }
+
+  &.sar-lg {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 // ==========================================
@@ -213,10 +223,12 @@ body {
     background: rgba(v.$color-primary, 0.1);
     color: v.$color-primary;
   }
+
   &.badge-success {
     background: rgba(v.$color-success, 0.1);
     color: v.$color-success;
   }
+
   &.badge-warn {
     background: rgba(v.$color-accent-warm, 0.12);
     color: darken(v.$color-accent-warm, 10%);
@@ -227,8 +239,13 @@ body {
 // ANIMATION KEYFRAMES
 // ==========================================
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes fadeInUp {
@@ -236,6 +253,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -243,8 +261,15 @@ body {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(v.$color-primary, 0.2); }
-  50% { box-shadow: 0 0 20px 4px rgba(v.$color-primary, 0.15); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(v.$color-primary, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 20px 4px rgba(v.$color-primary, 0.15);
+  }
 }
 
 // Product Quick View Dialog styling
@@ -271,6 +296,15 @@ body {
     margin: 15mm 12mm;
   }
 
+  app-root,
+  app-app-shell,
+  app-customer-shell {
+    display: block !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
   // Hide everything outside the invoice
   app-top-navbar,
   .main-nav-sidebar,
@@ -284,28 +318,36 @@ body {
   .mat-drawer-container,
   .mat-sidenav-container,
   .app-sidenav-container {
+    height: auto !important;
+    min-height: 0 !important;
     overflow: visible !important;
   }
 
   .mat-sidenav-content,
   .mat-drawer-content,
   .app-main-content {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
 
-  body, html {
+  .store-container,
+  .page-enter {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  body,
+  html {
     height: auto !important;
     overflow: visible !important;
     background: white !important;
     color: black !important;
-  }
-
-  app-root,
-  app-app-shell {
-    display: block !important;
-    overflow: visible !important;
-    height: auto !important;
   }
 
   // Generic print helpers
