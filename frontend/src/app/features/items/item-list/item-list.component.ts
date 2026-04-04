@@ -63,10 +63,40 @@ export class ItemListComponent implements OnInit, OnDestroy {
     page = signal(1);
     pageSize = signal(10);
     searchQuery = signal('');
+    sortActive = signal('');
+    sortDirection = signal<'asc' | 'desc'>('asc');
 
     displayedColumns = ['image', 'itemCode', 'name', 'category', 'price', 'vatPercentage', 'netTotal', 'createdAt', 'actions'];
 
     currentLang = computed(() => this.translate.currentLang || 'en');
+
+    sortedItems = computed(() => {
+        const itemsList = this.items();
+        const active = this.sortActive();
+        const direction = this.sortDirection();
+
+        if (!active) {
+            return itemsList;
+        }
+
+        const modifier = direction === 'asc' ? 1 : -1;
+        return [...itemsList].sort((a, b) => {
+            switch (active) {
+                case 'itemCode':
+                    return modifier * a.itemCode.localeCompare(b.itemCode);
+                case 'name':
+                    return modifier * a.nameEN.localeCompare(b.nameEN);
+                case 'category':
+                    return modifier * a.category.localeCompare(b.category);
+                case 'price':
+                    return modifier * (a.price - b.price);
+                case 'createdAt':
+                    return modifier * (new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+                default:
+                    return 0;
+            }
+        });
+    });
 
     ngOnInit(): void {
         this.searchSubject.pipe(
@@ -118,7 +148,8 @@ export class ItemListComponent implements OnInit, OnDestroy {
     }
 
     onSortChange(sort: Sort): void {
-        this.loadItems();
+        this.sortActive.set(sort.active);
+        this.sortDirection.set(sort.direction as 'asc' | 'desc');
     }
 
     addToCart(item: ItemDto): void {

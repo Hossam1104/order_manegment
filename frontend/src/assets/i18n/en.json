@@ -28,7 +28,13 @@
     "ADD_TO_CART": "Add to Cart",
     "VAT_INCL": "VAT Incl.",
     "QUICK_VIEW": "Quick View",
-    "FREE_SHIPPING": "Free shipping on orders over 500 SAR"
+    "FREE_SHIPPING": "Free shipping on orders over 500 SAR",
+    "SORT_BY": "Sort by",
+    "SORT_CODE": "Code",
+    "SORT_NAME": "Name",
+    "SORT_CATEGORY": "Category",
+    "SORT_PRICE": "Price",
+    "SORT_DATE": "Date"
   },
   "ITEMS": {
     "TITLE": "All Items",
@@ -86,7 +92,14 @@
     "INVOICE_TITLE": "Tax Invoice",
     "INVOICE_NO": "Invoice No:",
     "DATE": "Date:",
-    "TAX_ID": "Tax ID:"
+    "TAX_ID": "Tax ID:",
+    "CATEGORY": "Category",
+    "SORT_BY": "Sort by",
+    "SORT_CODE": "Code",
+    "SORT_NAME": "Name",
+    "SORT_CATEGORY": "Category",
+    "SORT_PRICE": "Price",
+    "SORT_DATE": "Date"
   },
   "MODAL": {
     "QUANTITY": "Quantity",

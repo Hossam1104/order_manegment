@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,9 @@ import { CartService, CartItem } from '../../../core/services/cart.service';
 import { ItemService } from '../../../core/services/item.service';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { UIAnimations } from '../../../shared/animations/ui.animations';
+
+export type CartSortField = 'code' | 'name' | 'category' | 'price' | 'date';
+export type SortDirection = 'asc' | 'desc';
 
 @Component({
     selector: 'app-cart-page',
@@ -40,6 +43,32 @@ export class CartPageComponent {
     cartService = inject(CartService);
     private itemService = inject(ItemService);
     private router = inject(Router);
+
+    sortField = signal<CartSortField>('date');
+    sortDirection = signal<SortDirection>('desc');
+
+    sortedCartItems = computed(() => {
+        const itemsList = this.cartService.cartItems();
+        const field = this.sortField();
+        const direction = this.sortDirection();
+        const modifier = direction === 'asc' ? 1 : -1;
+
+        return [...itemsList].sort((a, b) => {
+            switch (field) {
+                case 'code':
+                    return modifier * a.item.itemCode.localeCompare(b.item.itemCode);
+                case 'name':
+                    return modifier * a.item.nameEN.localeCompare(b.item.nameEN);
+                case 'category':
+                    return modifier * a.item.category.localeCompare(b.item.category);
+                case 'price':
+                    return modifier * (a.item.price - b.item.price);
+                case 'date':
+                default:
+                    return modifier * (new Date(a.item.createdAt).getTime() - new Date(b.item.createdAt).getTime());
+            }
+        });
+    });
 
     get shopPath(): string {
         return this.router.url.startsWith('/shop') ? '/shop' : '/';
@@ -96,5 +125,25 @@ export class CartPageComponent {
 
     printInvoice(): void {
         window.print();
+    }
+
+    setSortField(field: CartSortField): void {
+        if (this.sortField() === field) {
+            this.sortDirection.set(this.sortDirection() === 'asc' ? 'desc' : 'asc');
+        } else {
+            this.sortField.set(field);
+            this.sortDirection.set('asc');
+        }
+    }
+
+    getSortIcon(field: CartSortField): string {
+        if (this.sortField() !== field) {
+            return 'swap_vert';
+        }
+        return this.sortDirection() === 'asc' ? 'arrow_upward' : 'arrow_downward';
+    }
+
+    isActiveSort(field: CartSortField): boolean {
+        return this.sortField() === field;
     }
 }

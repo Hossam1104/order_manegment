@@ -28,7 +28,13 @@
     "ADD_TO_CART": "أضف للسلة",
     "VAT_INCL": "شامل الضريبة",
     "QUICK_VIEW": "عرض سريع",
-    "FREE_SHIPPING": "شحن مجاني للطلبات فوق 500 ر.س"
+    "FREE_SHIPPING": "شحن مجاني للطلبات فوق 500 ر.س",
+    "SORT_BY": "ترتيب حسب",
+    "SORT_CODE": "الكود",
+    "SORT_NAME": "الاسم",
+    "SORT_CATEGORY": "الفئة",
+    "SORT_PRICE": "السعر",
+    "SORT_DATE": "التاريخ"
   },
   "ITEMS": {
     "TITLE": "جميع الأصناف",
@@ -86,7 +92,14 @@
     "INVOICE_TITLE": "فاتورة ضريبية",
     "INVOICE_NO": "رقم الفاتورة:",
     "DATE": "التاريخ:",
-    "TAX_ID": "الرقم الضريبي:"
+    "TAX_ID": "الرقم الضريبي:",
+    "CATEGORY": "الفئة",
+    "SORT_BY": "ترتيب حسب",
+    "SORT_CODE": "الكود",
+    "SORT_NAME": "الاسم",
+    "SORT_CATEGORY": "الفئة",
+    "SORT_PRICE": "السعر",
+    "SORT_DATE": "التاريخ"
   },
   "MODAL": {
     "QUANTITY": "الكمية",

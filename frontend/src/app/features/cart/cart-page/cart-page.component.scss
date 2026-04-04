@@ -144,6 +144,129 @@
 }
 
 // ==========================================
+// SORT CONTROLS
+// ==========================================
+.sort-controls-container {
+  margin-bottom: v.$spacing-3;
+  padding: v.$spacing-2 v.$spacing-3;
+  background: linear-gradient(135deg, rgba(v.$color-primary, 0.02) 0%, rgba(v.$color-accent, 0.02) 100%);
+  border-bottom: 1px solid var(--color-border);
+
+  .sort-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: v.$spacing-1;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .sort-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    .sort-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: v.$radius-pill;
+      transition: background-color v.$transition-fast, color v.$transition-fast,
+        border-color v.$transition-fast, box-shadow v.$transition-fast, transform v.$transition-fast;
+      background: var(--color-surface);
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border);
+      height: 36px;
+      cursor: pointer;
+      overflow: visible;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+      --mat-outlined-button-ripple-color: transparent;
+      --mat-outlined-button-state-layer-color: transparent;
+      --mat-outlined-button-hover-state-layer-opacity: 0;
+      --mat-outlined-button-focus-state-layer-opacity: 0;
+      --mat-outlined-button-pressed-state-layer-opacity: 0;
+
+      &::after {
+        content: none;
+      }
+
+      mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        transition: transform v.$transition-fast;
+      }
+
+      &:hover {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+        box-shadow: v.$shadow-card;
+        transform: translateY(-1px);
+
+        mat-icon {
+          transform: scale(1.1);
+        }
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba(v.$color-primary, 0.25);
+        outline-offset: 2px;
+      }
+
+      &.active-sort {
+        background: v.$gradient-primary;
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 12px rgba(v.$color-primary, 0.3);
+
+        mat-icon {
+          transform: scale(1.15);
+        }
+
+        &:hover {
+          box-shadow: 0 6px 16px rgba(v.$color-primary, 0.4);
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      gap: 6px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 4px;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .sort-button {
+        flex: 0 0 auto;
+        min-width: auto;
+        padding: 6px 12px;
+        font-size: 11px;
+
+        mat-icon {
+          font-size: 14px;
+          width: 14px;
+          height: 14px;
+        }
+      }
+    }
+  }
+}
+
+// ==========================================
 // TABLE CARD
 // ==========================================
 .cart-items-card {
@@ -152,7 +275,7 @@
   overflow: hidden;
 }
 
-$grid-layout: 2fr 1fr 1fr 1fr 48px;
+$grid-layout: 2fr 1fr 1fr 1fr 1fr 48px;
 
 .cart-table-header {
   display: grid;
@@ -230,6 +353,35 @@ $grid-layout: 2fr 1fr 1fr 1fr 48px;
         font-size: 11px;
         font-family: 'JetBrains Mono', monospace;
         color: var(--color-text-muted);
+      }
+    }
+  }
+
+  .col-category {
+    color: var(--color-text-muted);
+    font-weight: 500;
+    font-size: 13px;
+
+    .category-value {
+      background: rgba(v.$color-primary, 0.08);
+      color: var(--color-primary);
+      padding: 4px 10px;
+      border-radius: v.$radius-pill;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: v.$spacing-2;
+
+      &::before {
+        content: attr(data-label);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 11px;
       }
     }
   }
@@ -590,7 +742,7 @@ $grid-layout: 2fr 1fr 1fr 1fr 48px;
   // Force table header to display as grid (overrides mobile display:none)
   .cart-table-header {
     display: grid !important;
-    grid-template-columns: 3fr 1fr 1fr 1.5fr !important;
+    grid-template-columns: 2.5fr 1fr 1fr 1fr 1.5fr !important;
     background: #0A2540 !important;
     color: white !important;
     border: none !important;
@@ -608,7 +760,7 @@ $grid-layout: 2fr 1fr 1fr 1fr 48px;
   // Force grid layout on rows (overrides mobile flex-direction:column)
   .cart-row {
     display: grid !important;
-    grid-template-columns: 3fr 1fr 1fr 1.5fr !important;
+    grid-template-columns: 2.5fr 1fr 1fr 1fr 1.5fr !important;
     flex-direction: row !important;
     padding: 12px 16px !important;
     border-bottom: 1px solid #eee !important;
@@ -645,6 +797,8 @@ $grid-layout: 2fr 1fr 1fr 1fr 48px;
     }
 
     // Override mobile stacked styles — hide pseudo-element labels in print
+    .col-product,
+    .col-category,
     .col-price,
     .col-qty,
     .col-total {
@@ -656,6 +810,37 @@ $grid-layout: 2fr 1fr 1fr 1fr 48px;
       &::before {
         display: none !important;
         content: none !important;
+      }
+    }
+
+    .col-product {
+      display: flex !important;
+      flex-direction: row !important;
+
+      .item-meta {
+        .item-name {
+          font-size: 12px;
+          color: #000;
+          font-weight: 600;
+        }
+
+        .item-code {
+          font-size: 10px;
+          color: #666;
+          margin-top: 2px;
+        }
+      }
+    }
+
+    .col-category {
+      font-size: 11px;
+      color: #333 !important;
+
+      .category-value {
+        background: #f0f0f0 !important;
+        color: #333 !important;
+        padding: 3px 8px;
+        font-size: 10px;
       }
     }
 

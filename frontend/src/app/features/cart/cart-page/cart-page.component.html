@@ -67,17 +67,50 @@
             </div>
             } @else {
 
+            <!-- Sort Controls (Hidden in print) -->
+            <div class="sort-controls-container hidden-print">
+                <div class="sort-label">{{ 'CART.SORT_BY' | translate }}:</div>
+                <div class="sort-buttons">
+                    <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+                        [class.active-sort]="isActiveSort('code')" (click)="setSortField('code')">
+                        <mat-icon>{{ getSortIcon('code') }}</mat-icon>
+                        {{ 'CART.SORT_CODE' | translate }}
+                    </button>
+                    <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+                        [class.active-sort]="isActiveSort('name')" (click)="setSortField('name')">
+                        <mat-icon>{{ getSortIcon('name') }}</mat-icon>
+                        {{ 'CART.SORT_NAME' | translate }}
+                    </button>
+                    <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+                        [class.active-sort]="isActiveSort('category')" (click)="setSortField('category')">
+                        <mat-icon>{{ getSortIcon('category') }}</mat-icon>
+                        {{ 'CART.SORT_CATEGORY' | translate }}
+                    </button>
+                    <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+                        [class.active-sort]="isActiveSort('price')" (click)="setSortField('price')">
+                        <mat-icon>{{ getSortIcon('price') }}</mat-icon>
+                        {{ 'CART.SORT_PRICE' | translate }}
+                    </button>
+                    <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+                        [class.active-sort]="isActiveSort('date')" (click)="setSortField('date')">
+                        <mat-icon>{{ getSortIcon('date') }}</mat-icon>
+                        {{ 'CART.SORT_DATE' | translate }}
+                    </button>
+                </div>
+            </div>
+
             <!-- Table Header for wider screens/invoice prints -->
             <div class="cart-table-header text-muted">
                 <div class="col-product">{{ 'CART.PRODUCT' | translate }}</div>
+                <div class="col-category">{{ 'CART.CATEGORY' | translate }}</div>
                 <div class="col-price">{{ 'CART.UNIT_PRICE' | translate }}</div>
                 <div class="col-qty">{{ 'CART.QUANTITY' | translate }}</div>
                 <div class="col-total">{{ 'CART.LINE_TOTAL' | translate }}</div>
                 <div class="col-action hidden-print"></div>
             </div>
 
-            <div class="cart-items-list" [@listAnimation]="cartService.cartItems().length">
-                @for (cartItem of cartService.cartItems(); track cartItem.item.id) {
+            <div class="cart-items-list" [@listAnimation]="sortedCartItems().length">
+                @for (cartItem of sortedCartItems(); track cartItem.item.id) {
                 <div class="cart-row">
                     <!-- Column 1: Product -->
                     <div class="col-product">
@@ -90,7 +123,12 @@
                         </div>
                     </div>
 
-                    <!-- Column 2: Price -->
+                    <!-- Column 2: Category -->
+                    <div class="col-category" data-label="Category">
+                        <span class="category-value">{{ cartItem.item.category }}</span>
+                    </div>
+
+                    <!-- Column 3: Price -->
                     <div class="col-price" data-label="Unit Price">
                         <span class="price-value">{{ cartItem.item.price | number:'1.2-2' }} <span
                                 class="sar-icon"></span></span>

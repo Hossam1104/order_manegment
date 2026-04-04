@@ -5,8 +5,40 @@
     </div>
 </div>
 
-<div class="product-grid" [@listAnimation]="items().length">
-    @for (item of items(); track item.id) {
+<!-- Sort Controls -->
+<div class="sort-controls-container">
+    <div class="sort-label">{{ 'STORE.SORT_BY' | translate }}:</div>
+    <div class="sort-buttons">
+        <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+            [class.active-sort]="isActiveSort('code')" (click)="setSortField('code')">
+            <mat-icon>{{ getSortIcon('code') }}</mat-icon>
+            {{ 'STORE.SORT_CODE' | translate }}
+        </button>
+        <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+            [class.active-sort]="isActiveSort('name')" (click)="setSortField('name')">
+            <mat-icon>{{ getSortIcon('name') }}</mat-icon>
+            {{ 'STORE.SORT_NAME' | translate }}
+        </button>
+        <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+            [class.active-sort]="isActiveSort('category')" (click)="setSortField('category')">
+            <mat-icon>{{ getSortIcon('category') }}</mat-icon>
+            {{ 'STORE.SORT_CATEGORY' | translate }}
+        </button>
+        <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+            [class.active-sort]="isActiveSort('price')" (click)="setSortField('price')">
+            <mat-icon>{{ getSortIcon('price') }}</mat-icon>
+            {{ 'STORE.SORT_PRICE' | translate }}
+        </button>
+        <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+            [class.active-sort]="isActiveSort('date')" (click)="setSortField('date')">
+            <mat-icon>{{ getSortIcon('date') }}</mat-icon>
+            {{ 'STORE.SORT_DATE' | translate }}
+        </button>
+    </div>
+</div>
+
+<div class="product-grid" [@listAnimation]="sortedItems().length">
+    @for (item of sortedItems(); track item.id) {
     <app-product-card [item]="item"></app-product-card>
     } @empty {
     <div class="empty-state">

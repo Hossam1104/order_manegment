@@ -30,7 +30,7 @@
     .cart-icon {
       color: var(--color-text-main);
     }
-    
+
     h2 {
       margin: 0;
       font-size: 20px;
@@ -51,19 +51,139 @@
 
   .close-btn {
     color: var(--color-text-muted);
-    &:hover { color: var(--color-text-main); }
+
+    &:hover {
+      color: var(--color-text-main);
+    }
+  }
+}
+
+// ==========================================
+// SORT CONTROLS
+// ==========================================
+.sort-controls-container {
+  padding: v.$spacing-2 v.$spacing-4;
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(135deg, rgba(v.$color-primary, 0.02) 0%, rgba(v.$color-accent, 0.02) 100%);
+  flex-shrink: 0;
+
+  .sort-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: v.$spacing-1;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .sort-buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 4px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .sort-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: v.$radius-pill;
+      transition: background-color v.$transition-fast, color v.$transition-fast,
+        border-color v.$transition-fast, box-shadow v.$transition-fast, transform v.$transition-fast;
+      background: var(--color-surface);
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border);
+      height: 32px;
+      flex: 0 0 auto;
+      min-width: auto;
+      white-space: nowrap;
+      cursor: pointer;
+      overflow: visible;
+      -webkit-tap-highlight-color: transparent;
+      --mat-outlined-button-ripple-color: transparent;
+      --mat-outlined-button-state-layer-color: transparent;
+      --mat-outlined-button-hover-state-layer-opacity: 0;
+      --mat-outlined-button-focus-state-layer-opacity: 0;
+      --mat-outlined-button-pressed-state-layer-opacity: 0;
+
+      &::after {
+        content: none;
+      }
+
+      mat-icon {
+        font-size: 14px;
+        width: 14px;
+        height: 14px;
+        transition: transform v.$transition-fast;
+      }
+
+      &:hover {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+        box-shadow: v.$shadow-card;
+        transform: translateY(-1px);
+
+        mat-icon {
+          transform: scale(1.1);
+        }
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba(v.$color-primary, 0.25);
+        outline-offset: 2px;
+      }
+
+      &.active-sort {
+        background: v.$gradient-primary;
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 12px rgba(v.$color-primary, 0.3);
+
+        mat-icon {
+          transform: scale(1.15);
+        }
+
+        &:hover {
+          box-shadow: 0 6px 16px rgba(v.$color-primary, 0.4);
+        }
+      }
+    }
   }
 }
 
 .cart-items-list {
-  flex: 1;                 // Liquid sizing fills space between sticky header & footer
-  overflow-y: auto;        // Core requirement: independent scrolling list
+  flex: 1; // Liquid sizing fills space between sticky header & footer
+  overflow-y: auto; // Core requirement: independent scrolling list
   padding: v.$spacing-3 v.$spacing-4;
-  
+
   // Custom minimal scrollbar
-  &::-webkit-scrollbar { width: 6px; }
-  &::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
-  &::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+  }
 }
 
 .empty-state {
@@ -77,16 +197,28 @@
 
   .empty-illustration {
     background: var(--color-hover);
-    width: 80px; height: 80px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: v.$spacing-3;
-    
-    mat-icon { font-size: 40px; width: 40px; height: 40px; color: var(--color-text-muted); opacity: 0.5; }
+
+    mat-icon {
+      font-size: 40px;
+      width: 40px;
+      height: 40px;
+      color: var(--color-text-muted);
+      opacity: 0.5;
+    }
   }
 
-  p { margin: 0 0 v.$spacing-4 0; font-size: 16px; }
-  
+  p {
+    margin: 0 0 v.$spacing-4 0;
+    font-size: 16px;
+  }
+
   button {
     font-weight: 500;
     border-color: var(--color-border);
@@ -97,26 +229,31 @@
   display: flex;
   gap: v.$spacing-3;
   padding: v.$spacing-3 0;
-  border-bottom: 1px solid rgba(0,0,0,0.04);
-  
-  &:last-child { border-bottom: none; }
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 
-    .item-visual {
-      width: 72px;
-      height: 72px;
-      flex-shrink: 0;
-      border-radius: v.$radius-img;
-      background: #fff;
-      overflow: hidden;
+  &:last-child {
+    border-bottom: none;
+  }
 
-      img {
-        width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply;
+  .item-visual {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: v.$radius-img;
+    background: #fff;
+    overflow: hidden;
 
-        :host-context(.dark-theme) & {
-          mix-blend-mode: normal;
-        }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+
+      :host-context(.dark-theme) & {
+        mix-blend-mode: normal;
       }
     }
+  }
 
   .item-details {
     flex: 1;
@@ -141,12 +278,25 @@
       }
 
       .remove-btn {
-        width: 24px; height: 24px; padding: 0;
-        display: flex; align-items: center; justify-content: center;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin-left: v.$spacing-1;
         opacity: 0.5;
-        &:hover { opacity: 1; color: v.$color-danger; }
-        mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+        &:hover {
+          opacity: 1;
+          color: v.$color-danger;
+        }
+
+        mat-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+        }
       }
     }
 
@@ -171,26 +321,52 @@
         overflow: hidden;
 
         .qty-btn {
-          width: 28px; height: 100%;
+          width: 28px;
+          height: 100%;
           background: transparent;
-          border: none; cursor: pointer;
-          display: flex; align-items: center; justify-content: center;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           color: var(--color-text-main);
-          &:hover:not(:disabled) { background: var(--color-hover); }
-          &:disabled { opacity: 0.3; cursor: not-allowed; }
-          mat-icon { font-size: 16px; width: 16px; height: 16px; }
+
+          &:hover:not(:disabled) {
+            background: var(--color-hover);
+          }
+
+          &:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+          }
+
+          mat-icon {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+          }
         }
 
         .qty-input {
-          width: 32px; height: 100%;
+          width: 32px;
+          height: 100%;
           text-align: center;
           border: none;
-          font-weight: 600; font-size: 13px;
+          font-weight: 600;
+          font-size: 13px;
           color: var(--color-text-main);
           background: transparent;
           appearance: textfield; // Remove arrows
-          &::-webkit-inner-spin-button, &::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-          &:focus { outline: none; }
+
+          &::-webkit-inner-spin-button,
+          &::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+
+          &:focus {
+            outline: none;
+          }
         }
       }
 
@@ -214,8 +390,10 @@
     justify-content: space-between;
     margin-bottom: v.$spacing-2;
     font-size: 14px;
-    
-    &.text-muted { color: var(--color-text-muted); }
+
+    &.text-muted {
+      color: var(--color-text-muted);
+    }
 
     &.grand-total {
       margin-top: v.$spacing-3;
@@ -230,7 +408,7 @@
 
   .checkout-actions {
     margin-top: v.$spacing-4;
-    
+
     .checkout-btn {
       width: 100%;
       height: 48px;
@@ -238,7 +416,7 @@
       @include m.modern-button;
       background-color: var(--color-primary);
       color: white;
-      
+
       &:disabled {
         background-color: var(--color-border);
         color: var(--color-text-muted);

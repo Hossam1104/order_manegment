@@ -13,8 +13,42 @@
         </button>
     </div>
 
+    <!-- Sort Controls -->
+    @if (cartService.itemCount() > 0) {
+    <div class="sort-controls-container">
+        <div class="sort-label">Sort by:</div>
+        <div class="sort-buttons">
+            <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+                [class.active-sort]="isActiveSort('code')" (click)="setSortField('code')">
+                <mat-icon>{{ getSortIcon('code') }}</mat-icon>
+                Code
+            </button>
+            <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+                [class.active-sort]="isActiveSort('name')" (click)="setSortField('name')">
+                <mat-icon>{{ getSortIcon('name') }}</mat-icon>
+                Name
+            </button>
+            <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+                [class.active-sort]="isActiveSort('category')" (click)="setSortField('category')">
+                <mat-icon>{{ getSortIcon('category') }}</mat-icon>
+                Category
+            </button>
+            <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+                [class.active-sort]="isActiveSort('price')" (click)="setSortField('price')">
+                <mat-icon>{{ getSortIcon('price') }}</mat-icon>
+                Price
+            </button>
+            <button mat-stroked-button type="button" class="sort-button" [disableRipple]="true"
+                [class.active-sort]="isActiveSort('date')" (click)="setSortField('date')">
+                <mat-icon>{{ getSortIcon('date') }}</mat-icon>
+                Date
+            </button>
+        </div>
+    </div>
+    }
+
     <!-- Scrollable Cart Items Area -->
-    <div class="cart-items-list" [@listAnimation]="cartService.cartItems().length">
+    <div class="cart-items-list" [@listAnimation]="sortedCartItems().length">
         @if (cartService.itemCount() === 0) {
         <div class="empty-state">
             <div class="empty-illustration">
@@ -24,7 +58,7 @@
             <button mat-stroked-button (click)="closeCart.emit()">Continue Shopping</button>
         </div>
         } @else {
-        @for (cartItem of cartService.cartItems(); track cartItem.item.id) {
+        @for (cartItem of sortedCartItems(); track cartItem.item.id) {
         <div class="cart-item">
             <!-- Item Image -->
             <div class="item-visual">

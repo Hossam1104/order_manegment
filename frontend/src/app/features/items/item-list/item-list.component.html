@@ -36,9 +36,10 @@
         }
 
         <!-- Data table -->
-        @if (items().length > 0) {
+        @if (sortedItems().length > 0) {
         <div class="table-container">
-            <table mat-table [dataSource]="items()" matSort (matSortChange)="onSortChange($event)">
+            <table mat-table [dataSource]="sortedItems()" matSort (matSortChange)="onSortChange($event)"
+                matSortActive="createdAt" matSortDirection="desc">
 
                 <!-- Image Column -->
                 <ng-container matColumnDef="image">
@@ -57,7 +58,8 @@
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef>{{ currentLang() === 'ar' ? ('ITEMS.NAME_AR' | translate) :
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ currentLang() === 'ar' ? ('ITEMS.NAME_AR' |
+                        translate) :
                         ('ITEMS.NAME_EN' | translate) }}</th>
                     <td mat-cell *matCellDef="let item">
                         <div class="item-name-cell">{{ getName(item) }}</div>
@@ -66,7 +68,7 @@
 
                 <!-- Category Column -->
                 <ng-container matColumnDef="category">
-                    <th mat-header-cell *matHeaderCellDef>{{ 'ITEMS.CATEGORY' | translate }}</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'ITEMS.CATEGORY' | translate }}</th>
                     <td mat-cell *matCellDef="let item">
                         <span class="category-badge" *ngIf="item.category">{{ item.category }}</span>
                     </td>

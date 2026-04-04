@@ -5,19 +5,41 @@
 // HERO SECTION - Animated Gradient Banner
 // ==========================================
 @keyframes popIn {
-  0% { opacity: 0; transform: scale(0.9) translateY(20px); }
-  70% { transform: scale(1.02) translateY(-5px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+
+  70% {
+    transform: scale(1.02) translateY(-5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 @keyframes floatText {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 @keyframes drift {
-  0% { background-position: 0 0; }
-  100% { background-position: 64px 64px; }
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 64px 64px;
+  }
 }
 
 .store-hero {
@@ -34,8 +56,11 @@
   &::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.15) 1px, transparent 0);
     background-size: 32px 32px;
     z-index: 1;
     opacity: 0.4;
@@ -59,7 +84,7 @@
     flex-direction: column;
     align-items: center;
   }
-  
+
   .hero-title {
     font-size: 42px;
     font-weight: 800;
@@ -73,7 +98,7 @@
       font-size: 32px;
     }
   }
-  
+
   .hero-subtitle {
     font-size: 18px;
     margin: 0;
@@ -86,7 +111,7 @@
       font-size: 16px;
     }
   }
-  
+
   // Decorative animated glow
   &::before {
     content: '';
@@ -114,6 +139,128 @@
 }
 
 // ==========================================
+// SORT CONTROLS
+// ==========================================
+.sort-controls-container {
+  margin-bottom: v.$spacing-4;
+  padding: v.$spacing-3;
+  background: var(--color-surface);
+  border-radius: v.$radius-card;
+  box-shadow: v.$shadow-soft;
+  border: 1px solid var(--color-border);
+
+  .sort-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: v.$spacing-2;
+  }
+
+  .sort-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: v.$spacing-1;
+
+    .sort-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: v.$radius-pill;
+      transition: background-color v.$transition-fast, color v.$transition-fast,
+        border-color v.$transition-fast, box-shadow v.$transition-fast, transform v.$transition-fast;
+      background: var(--color-surface);
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border);
+      cursor: pointer;
+      overflow: visible;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+      --mat-outlined-button-ripple-color: transparent;
+      --mat-outlined-button-state-layer-color: transparent;
+      --mat-outlined-button-hover-state-layer-opacity: 0;
+      --mat-outlined-button-focus-state-layer-opacity: 0;
+      --mat-outlined-button-pressed-state-layer-opacity: 0;
+
+      &::after {
+        content: none;
+      }
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        transition: transform v.$transition-fast;
+      }
+
+      &:hover {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+        box-shadow: v.$shadow-card;
+        transform: translateY(-1px);
+
+        mat-icon {
+          transform: scale(1.1);
+        }
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba(v.$color-primary, 0.25);
+        outline-offset: 2px;
+      }
+
+      &.active-sort {
+        background: v.$gradient-primary;
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 12px rgba(v.$color-primary, 0.3);
+
+        mat-icon {
+          transform: scale(1.15);
+        }
+
+        &:hover {
+          box-shadow: 0 6px 16px rgba(v.$color-primary, 0.4);
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 4px;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .sort-button {
+        flex: 0 0 auto;
+        min-width: auto;
+        padding: 8px 14px;
+        font-size: 12px;
+
+        mat-icon {
+          font-size: 16px;
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+}
+
+// ==========================================
 // PRODUCT GRID
 // ==========================================
 .product-grid {
@@ -125,18 +272,21 @@
   @media (max-width: 1200px) {
     grid-template-columns: repeat(4, 1fr);
   }
+
   // Tablet landscape
   @media (max-width: 992px) {
     grid-template-columns: repeat(3, 1fr);
   }
+
   // Tablet portrait
-  @media (max-width: 768px) { 
-    grid-template-columns: repeat(2, 1fr); 
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
     gap: v.$spacing-2;
   }
+
   // Mobile
-  @media (max-width: 480px) { 
-    grid-template-columns: 1fr; 
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
     gap: v.$spacing-2;
   }
 }
@@ -152,7 +302,7 @@
   justify-content: center;
   padding: v.$spacing-8 0;
   color: var(--color-text-muted);
-  
+
   .empty-icon {
     font-size: 64px;
     width: 64px;
@@ -161,14 +311,16 @@
     opacity: 0.3;
     color: var(--color-primary);
   }
-  
-  h3 { 
-    margin: 0 0 v.$spacing-1 0; 
-    color: var(--color-text-main); 
+
+  h3 {
+    margin: 0 0 v.$spacing-1 0;
+    color: var(--color-text-main);
     font-weight: 600;
     font-size: 20px;
   }
-  p { margin: 0; font-size: 15px; }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+  }
 }
-
-
