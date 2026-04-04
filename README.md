@@ -173,6 +173,23 @@ Designed specifically for the **Saudi Arabian market**, it supports bilingual co
 
 ---
 
+## 🚀 Production Deployment
+
+The production storefront at https://hossam1104.github.io/order_manegment/ is deployed automatically from the main branch.
+
+- Every push to main that changes the Angular frontend triggers a production build with the correct GitHub Pages base path.
+- The workflow publishes the generated files to the gh-pages branch and creates a 404.html fallback so Angular routes keep working after browser refreshes.
+- In GitHub Pages settings, keep the source as Deploy from a branch and select gh-pages /(root).
+
+For a local Pages build, run:
+
+```bash
+cd frontend
+npm run build:pages
+```
+
+---
+
 ## 📁 Project Structure
 
 ```
