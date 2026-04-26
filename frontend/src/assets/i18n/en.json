@@ -1,5 +1,5 @@
 {
-  "APP_TITLE": "Order Management",
+  "APP_TITLE": "Wafra",
   "NAV": {
     "ITEMS": "Items",
     "CART": "Cart",
@@ -21,8 +21,8 @@
     "AR": "AR"
   },
   "STORE": {
-    "HERO_TITLE": "Supercharge Your Business 🚀",
-    "HERO_SUBTITLE": "Discover smart tools and premium equipment designed to help your store thrive and grow.",
+    "HERO_TITLE": "Shop safely at Wafra",
+    "WHATSAPP_CONTACT": "WhatsApp",
     "NO_PRODUCTS": "No Products Found",
     "NO_PRODUCTS_HINT": "Try adjusting your search filters",
     "ADD_TO_CART": "Add to Cart",
@@ -92,6 +92,9 @@
     "INVOICE_TITLE": "Tax Invoice",
     "INVOICE_NO": "Invoice No:",
     "DATE": "Date:",
+    "CUSTOMER_NAME": "Customer Name",
+    "CUSTOMER_NAME_PLACEHOLDER": "Enter customer name",
+    "WHATSAPP_CONTACT": "WhatsApp Contact",
     "TAX_ID": "Tax ID:",
     "CATEGORY": "Category",
     "SORT_BY": "Sort by",

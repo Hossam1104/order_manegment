@@ -1,7 +1,13 @@
 <div class="store-hero">
     <div class="hero-content">
+        <div class="hero-logo-frame">
+            <img src="assets/wafra-logo.jpeg" alt="Wafra logo">
+        </div>
         <h1 class="hero-title">{{ 'STORE.HERO_TITLE' | translate }}</h1>
-        <p class="hero-subtitle">{{ 'STORE.HERO_SUBTITLE' | translate }}</p>
+        <a class="hero-whatsapp" [href]="whatsappLink" target="_blank" rel="noopener noreferrer">
+            <mat-icon>chat</mat-icon>
+            <span>{{ 'STORE.WHATSAPP_CONTACT' | translate }}: {{ whatsappDisplayNumber }}</span>
+        </a>
     </div>
 </div>
 

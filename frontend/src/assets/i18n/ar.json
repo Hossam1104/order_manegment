@@ -1,5 +1,5 @@
 {
-  "APP_TITLE": "إدارة الطلبات",
+  "APP_TITLE": "Wafra",
   "NAV": {
     "ITEMS": "الأصناف",
     "CART": "السلة",
@@ -21,8 +21,8 @@
     "AR": "عربي"
   },
   "STORE": {
-    "HERO_TITLE": "طوّر أعمالك بسهولة 🚀",
-    "HERO_SUBTITLE": "اكتشف أدوات ذكية ومعدات متميزة مصممة لمساعدة متجرك على النمو والازدهار.",
+    "HERO_TITLE": "تسوق بأمان من وفره",
+    "WHATSAPP_CONTACT": "واتساب",
     "NO_PRODUCTS": "لم يتم العثور على منتجات",
     "NO_PRODUCTS_HINT": "حاول تعديل مرشحات البحث",
     "ADD_TO_CART": "أضف للسلة",
@@ -92,6 +92,9 @@
     "INVOICE_TITLE": "فاتورة ضريبية",
     "INVOICE_NO": "رقم الفاتورة:",
     "DATE": "التاريخ:",
+    "CUSTOMER_NAME": "اسم العميل",
+    "CUSTOMER_NAME_PLACEHOLDER": "أدخل اسم العميل",
+    "WHATSAPP_CONTACT": "تواصل واتساب",
     "TAX_ID": "الرقم الضريبي:",
     "CATEGORY": "الفئة",
     "SORT_BY": "ترتيب حسب",

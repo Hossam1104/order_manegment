@@ -22,6 +22,9 @@ export type SortDirection = 'asc' | 'desc';
 export class ProductGridComponent implements OnInit {
   private itemService = inject(ItemService);
 
+  readonly whatsappDisplayNumber = '+966596800850';
+  readonly whatsappLink = 'https://wa.me/966596800850';
+
   items = signal<ItemDto[]>([]);
   loading = signal(true);
 

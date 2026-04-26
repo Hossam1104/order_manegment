@@ -44,8 +44,14 @@ export class CartPageComponent {
     private itemService = inject(ItemService);
     private router = inject(Router);
 
+    readonly whatsappDisplayNumber = '+966596800850';
+    readonly whatsappLink = 'https://wa.me/966596800850';
+    readonly whatsappQrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(this.whatsappLink)}`;
+
     sortField = signal<CartSortField>('date');
     sortDirection = signal<SortDirection>('desc');
+    customerName = signal('');
+    printedCustomerName = computed(() => this.customerName().trim() || '-');
 
     sortedCartItems = computed(() => {
         const itemsList = this.cartService.cartItems();
@@ -125,6 +131,10 @@ export class CartPageComponent {
 
     printInvoice(): void {
         window.print();
+    }
+
+    updateCustomerName(value: string): void {
+        this.customerName.set(value);
     }
 
     setSortField(field: CartSortField): void {

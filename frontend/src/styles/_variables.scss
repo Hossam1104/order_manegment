@@ -18,10 +18,10 @@ $max-w-container: 1400px;
 // ==========================================
 // COLOR SYSTEM - Light Mode
 // ==========================================
-$color-primary: #635BFF;         // Vibrant indigo (Stripe-inspired)
-$color-primary-light: #818CF8;   // Lighter variant
-$color-primary-dark: #4F46E5;    // Darker variant
-$color-accent: #0EA5E9;          // Sky blue accent
+$color-primary: #3F8F12;         // Wafra leaf green
+$color-primary-light: #7CB518;   // Fresh lime variant
+$color-primary-dark: #1F6B0D;    // Deep green variant
+$color-accent: #66B821;          // Logo-inspired green accent
 $color-accent-warm: #F59E0B;     // Amber accent for badges
 
 $color-bg: #F8FAFC;              // Soft cool white
@@ -47,7 +47,7 @@ $color-hover-dark: #1E293B;      // Slate 800
 // GRADIENTS
 // ==========================================
 $gradient-primary: linear-gradient(135deg, $color-primary 0%, $color-accent 100%);
-$gradient-hero: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, $color-primary 100%);
+$gradient-hero: linear-gradient(135deg, #101A12 0%, #1D3F22 52%, $color-primary 100%);
 $gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
 $gradient-sidebar: linear-gradient(180deg, $color-primary 0%, darken($color-primary, 12%) 100%);
 $gradient-card-hover: linear-gradient(135deg, rgba($color-primary, 0.02) 0%, rgba($color-accent, 0.04) 100%);

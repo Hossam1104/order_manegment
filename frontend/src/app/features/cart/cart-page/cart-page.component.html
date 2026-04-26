@@ -4,7 +4,7 @@
     <div class="print-header hidden-screen">
         <div class="invoice-brand">
             <div class="invoice-logo">
-                <mat-icon>store</mat-icon>
+                <img src="assets/wafra-logo.jpeg" alt="Wafra logo">
             </div>
             <h1>{{ 'APP_TITLE' | translate }}</h1>
         </div>
@@ -18,6 +18,18 @@
                 <div class="meta-item">
                     <span class="meta-label">{{ 'CART.DATE' | translate }}</span>
                     <span class="meta-value">{{ currentDate | date:'dd MMM yyyy, HH:mm' }}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">{{ 'CART.CUSTOMER_NAME' | translate }}</span>
+                    <span class="meta-value">{{ printedCustomerName() }}</span>
+                </div>
+            </div>
+
+            <div class="invoice-contact">
+                <img [src]="whatsappQrCodeUrl" alt="WhatsApp QR Code">
+                <div class="contact-text">
+                    <div class="contact-label">{{ 'CART.WHATSAPP_CONTACT' | translate }}</div>
+                    <div class="contact-number">{{ whatsappDisplayNumber }}</div>
                 </div>
             </div>
         </div>
@@ -175,6 +187,13 @@
         <!-- Right Side Summary -->
         @if (cartService.itemCount() > 0) {
         <mat-card class="order-summary-card" appearance="outlined">
+            <mat-form-field class="customer-name-field hidden-print" appearance="outline">
+                <mat-label>{{ 'CART.CUSTOMER_NAME' | translate }}</mat-label>
+                <input matInput type="text" [value]="customerName()"
+                    (input)="updateCustomerName($any($event.target).value)"
+                    [placeholder]="'CART.CUSTOMER_NAME_PLACEHOLDER' | translate" maxlength="100" autocomplete="name">
+            </mat-form-field>
+
             <h2>{{ 'CART.ORDER_SUMMARY' | translate }}</h2>
 
             <div class="summary-line text-muted">
