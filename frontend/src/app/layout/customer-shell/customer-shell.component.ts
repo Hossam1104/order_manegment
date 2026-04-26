@@ -65,15 +65,10 @@ export class CustomerShellComponent implements OnInit, OnDestroy, AfterViewInit 
     };
 
     constructor() {
-        const storedLang = this.currentLang();
-        if (storedLang !== 'en') {
-            this.translate.use(storedLang);
-            document.documentElement.dir = storedLang === 'ar' ? 'rtl' : 'ltr';
-            document.documentElement.lang = storedLang;
-        }
-
         this.translate.onLangChange.subscribe(event => {
             this.currentLang.set(event.lang);
+            document.documentElement.dir = event.lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = event.lang;
         });
     }
 
